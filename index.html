@@ -408,35 +408,6 @@
       background: rgba(6, 13, 26, 0.3);
     }
 
-    /* ── Gallery (Fallback) ── */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-      margin-top: 10px;
-    }
-    .gallery-item {
-      background: rgba(6, 13, 26, 0.6);
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      border: 1px solid rgba(74, 158, 255, 0.08);
-      cursor: pointer;
-    }
-    .gallery-item:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 40px rgba(74, 158, 255, 0.08);
-      border-color: rgba(74, 158, 255, 0.2);
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 260px;
-      object-fit: cover;
-      display: block;
-      background: #0b1326;
-    }
-
     /* ── Lightbox ── */
     .lightbox {
       display: none;
@@ -1018,13 +989,12 @@
     <div class="tab-content active" id="tab-architectural">
       <div class="slider-container">
         <div class="slider-wrapper" id="slider-architectural">
-          <!-- Replace with your actual image filenames -->
-          <div class="slide"><img src="arch-1.jpg" alt="Architectural Design 1" /></div>
-          <div class="slide"><img src="arch-2.jpg" alt="Architectural Design 2" /></div>
-          <div class="slide"><img src="arch-3.jpg" alt="Architectural Design 3" /></div>
-          <div class="slide"><img src="arch-4.jpg" alt="Architectural Design 4" /></div>
-          <div class="slide"><img src="arch-5.jpg" alt="Architectural Design 5" /></div>
-          <div class="slide"><img src="arch-6.jpg" alt="Architectural Design 6" /></div>
+          <div class="slide"><img src="arch-1.png" alt="Architectural Design 1" /></div>
+          <div class="slide"><img src="arch-2.png" alt="Architectural Design 2" /></div>
+          <div class="slide"><img src="arch-3.png" alt="Architectural Design 3" /></div>
+          <div class="slide"><img src="arch-4.png" alt="Architectural Design 4" /></div>
+          <div class="slide"><img src="arch-5.png" alt="Architectural Design 5" /></div>
+          <div class="slide"><img src="arch-6.png" alt="Architectural Design 6" /></div>
         </div>
         <button class="slider-btn prev" onclick="moveSlider('architectural', -1)">❮</button>
         <button class="slider-btn next" onclick="moveSlider('architectural', 1)">❯</button>
@@ -1036,17 +1006,13 @@
     <div class="tab-content" id="tab-3d">
       <div class="slider-container">
         <div class="slider-wrapper" id="slider-3d">
-          <!-- Replace with your actual image filenames -->
-          <div class="slide"><img src="3d-1.jpg" alt="3D Model 1" /></div>
-          <div class="slide"><img src="3d-2.jpg" alt="3D Model 2" /></div>
-          <div class="slide"><img src="3d-3.jpg" alt="3D Model 3" /></div>
-          <div class="slide"><img src="3d-4.jpg" alt="3D Model 4" /></div>
-          <div class="slide"><img src="3d-5.jpg" alt="3D Model 5" /></div>
-          <div class="slide"><img src="3d-6.jpg" alt="3D Model 6" /></div>
+          <div class="slide"><img src="3d-1.png" alt="3D Model 1" /></div>
+          <div class="slide"><img src="3d-2.png" alt="3D Model 2" /></div>
+          <div class="slide"><img src="3d-3.png" alt="3D Model 3" /></div>
         </div>
         <button class="slider-btn prev" onclick="moveSlider('3d', -1)">❮</button>
         <button class="slider-btn next" onclick="moveSlider('3d', 1)">❯</button>
-        <div class="slider-counter" id="counter-3d">1 / 6</div>
+        <div class="slider-counter" id="counter-3d">1 / 3</div>
       </div>
     </div>
 
@@ -1054,17 +1020,14 @@
     <div class="tab-content" id="tab-siteworks">
       <div class="slider-container">
         <div class="slider-wrapper" id="slider-siteworks">
-          <!-- Replace with your actual image filenames -->
-          <div class="slide"><img src="site-1.jpg" alt="Site Work 1" /></div>
-          <div class="slide"><img src="site-2.jpg" alt="Site Work 2" /></div>
-          <div class="slide"><img src="site-3.jpg" alt="Site Work 3" /></div>
-          <div class="slide"><img src="site-4.jpg" alt="Site Work 4" /></div>
-          <div class="slide"><img src="site-5.jpg" alt="Site Work 5" /></div>
-          <div class="slide"><img src="site-6.jpg" alt="Site Work 6" /></div>
+          <div class="slide"><img src="site-1.png" alt="Site Work 1" /></div>
+          <div class="slide"><img src="site-2.png" alt="Site Work 2" /></div>
+          <div class="slide"><img src="site-3.png" alt="Site Work 3" /></div>
+          <div class="slide"><img src="site-4.png" alt="Site Work 4" /></div>
         </div>
         <button class="slider-btn prev" onclick="moveSlider('siteworks', -1)">❮</button>
         <button class="slider-btn next" onclick="moveSlider('siteworks', 1)">❯</button>
-        <div class="slider-counter" id="counter-siteworks">1 / 6</div>
+        <div class="slider-counter" id="counter-siteworks">1 / 4</div>
       </div>
     </div>
 
@@ -1345,13 +1308,6 @@
   }
 
   document.querySelectorAll('.slide img').forEach(img => {
-    img.addEventListener('click', function(e) {
-      e.stopPropagation();
-      openLightbox(this.src);
-    });
-  });
-
-  document.querySelectorAll('.gallery-item img').forEach(img => {
     img.addEventListener('click', function(e) {
       e.stopPropagation();
       openLightbox(this.src);
