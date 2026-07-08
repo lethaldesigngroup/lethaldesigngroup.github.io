@@ -26,6 +26,7 @@
       --input-bg: rgba(6, 13, 26, 0.6);
       --section-even: rgba(74, 158, 255, 0.02);
       --slider-bg: rgba(6, 13, 26, 0.4);
+      --hero-overlay: rgba(6, 13, 26, 0.5);
     }
 
     /* ── Light Mode Variables ── */
@@ -46,6 +47,7 @@
       --input-bg: rgba(255, 255, 255, 0.8);
       --section-even: rgba(74, 158, 255, 0.04);
       --slider-bg: rgba(255, 255, 255, 0.6);
+      --hero-overlay: rgba(255, 255, 255, 0.4);
     }
 
     /* ── Reset & Base ── */
@@ -158,79 +160,121 @@
     .theme-toggle .icon.moon { right: 6px; color: #a8c8f0; }
     [data-theme="light"] .theme-toggle .slider { transform: translateX(24px); }
 
-    /* ── Header ── */
-    header {
-      background: var(--bg-secondary);
-      color: var(--text-primary);
-      padding: 50px 0 40px;
-      border-bottom: 4px solid #4a9eff;
+    /* ── HERO SECTION (Full Screen with Slideshow) ── */
+    .hero {
       position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
-      text-align: center;
+      background: var(--bg-secondary);
+      border-bottom: 4px solid #4a9eff;
+    }
+
+    /* Slideshow Background */
+    .hero-slideshow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    .hero-slideshow .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+      transform: scale(1);
+      animation: kenBurns 20s ease-in-out infinite alternate;
+    }
+    .hero-slideshow .slide.active {
+      opacity: 1;
+    }
+    .hero-slideshow .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @keyframes kenBurns {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.08); }
+    }
+
+    /* Overlay */
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--hero-overlay);
+      z-index: 1;
+      backdrop-filter: blur(2px);
       transition: background 0.3s ease;
     }
-    header::before {
-      content: "";
-      position: absolute;
-      top: -30%;
-      right: -20%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(74,158,255,0.04) 0%, transparent 70%);
-      border-radius: 50%;
+
+    /* Hero Content */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--text-primary);
+      padding: 20px;
+      max-width: 900px;
+      width: 100%;
+      transition: color 0.3s ease;
     }
-    header::after {
-      content: "";
-      position: absolute;
-      bottom: -30%;
-      left: -20%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(74,158,255,0.03) 0%, transparent 70%);
-      border-radius: 50%;
-    }
-    header .header-content { position: relative; z-index: 2; }
-    header h1 {
-      font-size: 3.2rem;
+    .hero-content h1 {
+      font-size: 4rem;
       font-weight: 900;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      text-shadow: 0 2px 30px rgba(0,0,0,0.1);
+      text-shadow: 0 4px 40px rgba(0,0,0,0.4);
+      margin-bottom: 8px;
     }
-    header h1 span { color: #4a9eff; }
-    header .tagline {
-      font-size: 1.25rem;
-      opacity: 0.85;
-      margin-top: 8px;
+    .hero-content h1 span { color: #4a9eff; }
+    .hero-content .tagline {
+      font-size: 1.4rem;
+      opacity: 0.9;
       font-weight: 300;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
       color: var(--text-muted);
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
     }
-    .typing-text {
+    .hero-content .typing-text {
       display: inline-block;
       border-right: 3px solid #4a9eff;
       padding-right: 6px;
       animation: blink 0.8s step-end infinite;
     }
     @keyframes blink { 50% { border-color: transparent; } }
-    .contact-bar {
+    .hero-content .contact-bar {
       margin-top: 28px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px 40px;
       font-size: 0.95rem;
-      background: rgba(74, 158, 255, 0.06);
+      background: rgba(0,0,0,0.2);
       backdrop-filter: blur(8px);
       padding: 14px 30px;
       border-radius: 12px;
-      border: 1px solid rgba(74, 158, 255, 0.08);
+      border: 1px solid rgba(255,255,255,0.08);
       max-width: 700px;
       margin-left: auto;
       margin-right: auto;
     }
-    .contact-bar a { color: #4a9eff; text-decoration: none; font-weight: 500; }
-    .contact-bar a:hover { text-decoration: underline; color: #6db4ff; }
+    .hero-content .contact-bar a { color: #4a9eff; text-decoration: none; font-weight: 500; }
+    .hero-content .contact-bar a:hover { text-decoration: underline; color: #6db4ff; }
 
     /* ── Sections ── */
     section { padding: 55px 0; border-bottom: 1px solid var(--border-light); transition: background 0.3s ease; }
@@ -868,10 +912,11 @@
 
     /* ── Responsive ── */
     @media (max-width: 700px) {
-      header h1 { font-size: 1.8rem; }
+      .hero-content h1 { font-size: 2.2rem; }
+      .hero-content .tagline { font-size: 1rem; }
       .about-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
-      .contact-bar { flex-direction: column; gap: 6px; }
+      .hero-content .contact-bar { flex-direction: column; gap: 6px; }
       .cta-box h3 { font-size: 1.5rem; }
       .services-grid { grid-template-columns: 1fr 1fr; }
       .nav-container { flex-direction: column; gap: 10px; }
@@ -886,7 +931,7 @@
       .precision-grid { grid-template-columns: 1fr; }
       .nav-logo-img { width: 40px; height: 40px; }
       .nav-logo-text { font-size: 0.9rem; }
-      .contact-bar { padding: 12px 16px; }
+      .hero-content .contact-bar { padding: 12px 16px; }
       .slide { height: 300px; }
       .slider-btn {
         padding: 10px 14px;
@@ -908,6 +953,7 @@
         padding: 6px 10px;
         font-size: 0.8rem;
       }
+      .hero-content h1 { font-size: 1.8rem; }
     }
   </style>
 </head>
@@ -938,9 +984,17 @@
   </div>
 </nav>
 
-<!-- ═══════════ HEADER ═══════════ -->
-<header>
-  <div class="container header-content">
+<!-- ═══════════ HERO SECTION (Full Screen with Slideshow) ═══════════ -->
+<section class="hero" id="home">
+  <!-- Slideshow Background -->
+  <div class="hero-slideshow" id="heroSlideshow">
+    <!-- Images will be injected here by JavaScript -->
+  </div>
+  <!-- Overlay -->
+  <div class="hero-overlay"></div>
+
+  <!-- Hero Content -->
+  <div class="hero-content">
     <h1>LETHAL <span>DESIGN</span> GROUP</h1>
     <div class="tagline">
       <span class="typing-text" id="typingText">Architectural &amp; Structural Designs — Precision. Power. Perfection.</span>
@@ -951,7 +1005,7 @@
       <span>📍 Lusaka, Zambia</span>
     </div>
   </div>
-</header>
+</section>
 
 <!-- ═══════════ ABOUT ═══════════ -->
 <section id="about">
@@ -1367,6 +1421,84 @@
     });
   });
 
+  // ─── HERO SLIDESHOW ───
+  const heroSlideshow = document.getElementById('heroSlideshow');
+  const imagePrefixes = ['arch', '3d', 'site'];
+  let heroImages = [];
+
+  // Collect all images
+  for (let p of imagePrefixes) {
+    let i = 1;
+    while (i <= 20) {
+      const imgName = `${p}-${i}.png`;
+      heroImages.push(imgName);
+      i++;
+    }
+  }
+
+  // Filter images that actually exist (using onload)
+  let existingImages = [];
+  let loadedCount = 0;
+
+  function checkImageExists(imgName, callback) {
+    const img = new Image();
+    img.src = imgName;
+    img.onload = function() {
+      existingImages.push(imgName);
+      loadedCount++;
+      if (loadedCount === heroImages.length) {
+        // All images checked, start slideshow
+        startHeroSlideshow();
+      }
+      callback();
+    };
+    img.onerror = function() {
+      loadedCount++;
+      if (loadedCount === heroImages.length) {
+        startHeroSlideshow();
+      }
+      callback();
+    };
+  }
+
+  function startHeroSlideshow() {
+    if (existingImages.length === 0) {
+      // Fallback: show a placeholder if no images
+      const slide = document.createElement('div');
+      slide.className = 'slide active';
+      slide.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg-secondary);color:var(--text-muted);font-size:1.5rem;">🖼️ Upload images to see the slideshow</div>`;
+      heroSlideshow.appendChild(slide);
+      return;
+    }
+
+    // Create slides for each existing image
+    existingImages.forEach((imgName, idx) => {
+      const slide = document.createElement('div');
+      slide.className = 'slide' + (idx === 0 ? ' active' : '');
+      const img = document.createElement('img');
+      img.src = imgName;
+      img.alt = 'LETHAL DESIGN GROUP Portfolio';
+      slide.appendChild(img);
+      heroSlideshow.appendChild(slide);
+    });
+
+    // Start rotating slides
+    let currentSlide = 0;
+    const slides = heroSlideshow.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    setInterval(() => {
+      slides.forEach(s => s.classList.remove('active'));
+      currentSlide = (currentSlide + 1) % totalSlides;
+      slides[currentSlide].classList.add('active');
+    }, 6000);
+  }
+
+  // Start checking images
+  heroImages.forEach(imgName => {
+    checkImageExists(imgName, () => {});
+  });
+
   // ─── DYNAMIC SLIDER LOADER ───
   const categories = [
     { id: 'architectural', prefix: 'arch', maxImages: 50 },
@@ -1384,7 +1516,6 @@
       sliderStates[tabId] = { currentIndex: 0 };
       counter.textContent = `1 / ${total}`;
     } else {
-      // Show placeholder if no images
       const slide = document.createElement('div');
       slide.className = 'slide';
       slide.innerHTML = `<div style="color: var(--text-muted); font-size: 1.2rem; text-align: center; padding: 40px;">
@@ -1403,9 +1534,7 @@
     const counter = document.getElementById(`counter-${category.id}`);
     if (!wrapper) return;
 
-    // Clear existing content first
     wrapper.innerHTML = '';
-
     let loadedCount = 0;
 
     for (let i = 1; i <= category.maxImages; i++) {
@@ -1422,20 +1551,16 @@
           imgElement.alt = `${category.prefix.charAt(0).toUpperCase() + category.prefix.slice(1)} Design ${i}`;
           slide.appendChild(imgElement);
           wrapper.appendChild(slide);
-          loadedCount++;
           updateSliderState(category.id, wrapper, counter);
         }
       };
-      // If image fails to load, skip it silently
     }
 
-    // After loading all, update state
     setTimeout(() => {
       updateSliderState(category.id, wrapper, counter);
     }, 1500);
   }
 
-  // Load all categories
   categories.forEach(cat => loadCategoryImages(cat));
 
   // ─── Slider Function ───
@@ -1468,7 +1593,6 @@
     counter.textContent = `${newIndex + 1} / ${totalSlides}`;
   }
 
-  // Initialize slider states
   document.querySelectorAll('.tab-content').forEach(tab => {
     const wrapper = tab.querySelector('.slider-wrapper');
     const counter = tab.querySelector('.slider-counter');
@@ -1484,5 +1608,6 @@
     }
   });
 </script>
+
 </body>
 </html>
