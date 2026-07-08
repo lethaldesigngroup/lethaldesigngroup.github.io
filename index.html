@@ -567,7 +567,7 @@
     }
     .lightbox .close-btn:hover { transform: scale(1.2); }
 
-    /* ── ACCORDION STYLES (Client Reviews & FAQ) ── */
+    /* ── ACCORDION STYLES ── */
     .accordion-section {
       margin-bottom: 20px;
     }
@@ -629,13 +629,13 @@
       border: 1px solid var(--border-light);
     }
 
-    /* ── Testimonials inside Accordion ── */
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    /* ── Testimonials (Vertical) ── */
+    .testimonials-vertical {
+      display: flex;
+      flex-direction: column;
       gap: 24px;
     }
-    .testimonial {
+    .testimonial-vertical {
       background: var(--bg-card-hover);
       backdrop-filter: blur(8px);
       padding: 28px 24px;
@@ -643,43 +643,43 @@
       border: 1px solid var(--border-light);
       transition: transform 0.25s, border-color 0.25s, background 0.3s;
     }
-    .testimonial:hover {
-      transform: translateY(-4px);
+    .testimonial-vertical:hover {
+      transform: translateX(6px);
       border-color: rgba(74, 158, 255, 0.2);
     }
-    .testimonial .stars {
+    .testimonial-vertical .stars {
       color: #f7c948;
       font-size: 1.2rem;
       letter-spacing: 2px;
       margin-bottom: 10px;
     }
-    .testimonial blockquote {
+    .testimonial-vertical blockquote {
       font-style: italic;
       color: var(--text-secondary);
       font-size: 1rem;
       line-height: 1.7;
       margin-bottom: 12px;
     }
-    .testimonial .client-name { font-weight: 700; color: #4a9eff; }
-    .testimonial .client-company { color: var(--text-muted); font-size: 0.85rem; }
+    .testimonial-vertical .client-name { font-weight: 700; color: #4a9eff; }
+    .testimonial-vertical .client-company { color: var(--text-muted); font-size: 0.85rem; }
 
-    /* ── FAQ inside Accordion ── */
-    .faq-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
+    /* ── FAQ (Vertical) ── */
+    .faq-vertical {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
-    .faq-item {
+    .faq-item-vertical {
       background: var(--bg-card-hover);
       backdrop-filter: blur(8px);
-      padding: 20px 24px;
+      padding: 16px 22px;
       border-radius: 12px;
       border: 1px solid var(--border-light);
       transition: border-color 0.25s, background 0.3s;
       cursor: pointer;
     }
-    .faq-item:hover { border-color: rgba(74, 158, 255, 0.2); }
-    .faq-item .question {
+    .faq-item-vertical:hover { border-color: rgba(74, 158, 255, 0.2); }
+    .faq-item-vertical .question {
       font-weight: 700;
       color: var(--text-primary);
       display: flex;
@@ -687,13 +687,13 @@
       align-items: center;
       gap: 12px;
     }
-    .faq-item .question .icon {
+    .faq-item-vertical .question .icon {
       color: #4a9eff;
       font-size: 1.2rem;
       transition: transform 0.3s;
       flex-shrink: 0;
     }
-    .faq-item .answer {
+    .faq-item-vertical .answer {
       color: var(--text-muted);
       margin-top: 10px;
       max-height: 0;
@@ -701,48 +701,114 @@
       transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
       opacity: 0;
     }
-    .faq-item.active .answer {
+    .faq-item-vertical.active .answer {
       max-height: 300px;
       opacity: 1;
       margin-top: 12px;
     }
-    .faq-item.active .question .icon { transform: rotate(180deg); }
+    .faq-item-vertical.active .question .icon { transform: rotate(180deg); }
 
-    /* ── BOUNDARYLESS CTA ── */
-    .cta-boundaryless {
+    /* ── FANCY CTA ANIMATION ── */
+    .cta-fancy {
       text-align: center;
-      padding: 40px 20px;
+      padding: 20px 0;
+      position: relative;
     }
-    .cta-boundaryless h2 {
-      font-size: 2.8rem;
+    .cta-fancy::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #4a9eff, #6db4ff, #4a9eff, transparent);
+      background-size: 300% 100%;
+      animation: shimmerLine 3s ease-in-out infinite;
+    }
+    @keyframes shimmerLine {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .cta-fancy-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      padding: 20px 0;
+    }
+
+    .cta-line {
+      opacity: 0;
+      transform: translateY(40px);
+      animation: ctaReveal 0.8s ease forwards;
+    }
+    .cta-line-1 { animation-delay: 0.1s; }
+    .cta-line-2 { animation-delay: 0.4s; }
+    .cta-line-3 { animation-delay: 0.7s; }
+    .cta-line-4 { animation-delay: 1.0s; }
+
+    @keyframes ctaReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .cta-highlight {
+      font-size: 3.2rem;
       font-weight: 900;
-      color: var(--text-primary);
-      text-transform: uppercase;
       letter-spacing: 2px;
-      border: none;
-      padding: 0;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, #4a9eff, #6db4ff, #4a9eff);
+      line-height: 1.2;
+      display: inline-block;
+    }
+    .cta-gradient-text {
+      background: linear-gradient(135deg, #4a9eff, #6db4ff, #a78bfa, #4a9eff);
       background-size: 300% 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       animation: gradientShiftText 4s ease-in-out infinite;
-      display: inline-block;
+      position: relative;
     }
+    .cta-gradient-text::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #4a9eff, #a78bfa);
+      border-radius: 4px;
+      animation: underlineGrow 1.2s ease forwards 1.2s;
+    }
+    @keyframes underlineGrow {
+      0% { width: 0; }
+      100% { width: 100%; }
+    }
+
     @keyframes gradientShiftText {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    .cta-boundaryless p {
+
+    .cta-line-3 p {
       font-size: 1.2rem;
       color: var(--text-muted);
-      margin-bottom: 24px;
+      margin: 16px auto 24px;
+      max-width: 600px;
       font-weight: 300;
       letter-spacing: 0.5px;
+      line-height: 1.8;
     }
-    .cta-boundaryless .btn {
+
+    .cta-btn-glow {
       display: inline-block;
       background: #4a9eff;
       color: #060d1a;
@@ -751,16 +817,27 @@
       font-weight: 700;
       font-size: 1.1rem;
       text-decoration: none;
-      transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
       text-transform: uppercase;
       letter-spacing: 1px;
       border: none;
       cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      box-shadow: 0 0 20px rgba(74, 158, 255, 0.2);
+      animation: btnPulse 2s ease-in-out infinite;
     }
-    .cta-boundaryless .btn:hover {
+    .cta-btn-glow:hover {
       background: #6db4ff;
-      transform: scale(1.02);
-      box-shadow: 0 4px 30px rgba(74, 158, 255, 0.2);
+      transform: scale(1.04);
+      box-shadow: 0 0 40px rgba(74, 158, 255, 0.4);
+    }
+    @keyframes btnPulse {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(74, 158, 255, 0.2);
+      }
+      50% {
+        box-shadow: 0 0 40px rgba(74, 158, 255, 0.4);
+      }
     }
 
     /* ── Contact Form ── */
@@ -1007,8 +1084,8 @@
       .whatsapp-alternative .whatsapp-link { width: 100%; justify-content: center; }
       .lightbox .close-btn { top: 15px; right: 20px; font-size: 2.5rem; }
       section { padding: 40px 0; }
-      .faq-grid { grid-template-columns: 1fr; }
-      .testimonials-grid { grid-template-columns: 1fr; }
+      .faq-vertical { gap: 8px; }
+      .testimonials-vertical { gap: 16px; }
       .trust-grid { grid-template-columns: 1fr 1fr; }
       .precision-grid { grid-template-columns: 1fr; }
       .nav-logo-img { width: 40px; height: 40px; }
@@ -1025,7 +1102,9 @@
       .theme-toggle .slider { width: 18px; height: 18px; }
       [data-theme="light"] .theme-toggle .slider { transform: translateX(22px); }
       .nav-right { gap: 10px; }
-      .cta-boundaryless h2 { font-size: 1.8rem; }
+      .cta-highlight { font-size: 2rem; }
+      .cta-line-3 p { font-size: 1rem; padding: 0 10px; }
+      .cta-fancy::before { width: 80%; }
       .accordion-header h2 { font-size: 1.1rem; }
     }
     @media (max-width: 450px) {
@@ -1038,7 +1117,7 @@
         font-size: 0.8rem;
       }
       .hero-content h1 { font-size: 1.8rem; }
-      .cta-boundaryless h2 { font-size: 1.5rem; }
+      .cta-highlight { font-size: 1.6rem; }
     }
   </style>
 </head>
@@ -1104,23 +1183,30 @@
         </ul>
       </div>
       <div>
-        <div class="precision-grid">
-          <div class="precision-card">
-            <span class="precision-icon">✏️</span>
-            <div class="precision-title">Precision Drafting</div>
-            <div class="precision-desc">Accurate, detailed plans you can trust</div>
-          </div>
-          <div class="precision-card">
-            <span class="precision-icon">🏗️</span>
-            <div class="precision-title">Structural Integrity</div>
-            <div class="precision-desc">Built to last, designed for safety</div>
-          </div>
-          <div class="precision-card">
-            <span class="precision-icon">📋</span>
-            <div class="precision-title">Permit-Ready Plans</div>
-            <div class="precision-desc">Code-compliant and approval-ready</div>
-          </div>
-        </div>
+        <!-- Precision Cards removed from here — moved to separate section below -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PRECISION CARDS (NEW POSITION) ═══════════ -->
+<section style="background: var(--section-even); padding: 40px 0;">
+  <div class="container">
+    <div class="precision-grid">
+      <div class="precision-card">
+        <span class="precision-icon">✏️</span>
+        <div class="precision-title">Precision Drafting</div>
+        <div class="precision-desc">Accurate, detailed plans you can trust</div>
+      </div>
+      <div class="precision-card">
+        <span class="precision-icon">🏗️</span>
+        <div class="precision-title">Structural Integrity</div>
+        <div class="precision-desc">Built to last, designed for safety</div>
+      </div>
+      <div class="precision-card">
+        <span class="precision-icon">📋</span>
+        <div class="precision-title">Permit-Ready Plans</div>
+        <div class="precision-desc">Code-compliant and approval-ready</div>
       </div>
     </div>
   </div>
@@ -1232,20 +1318,20 @@
       </div>
       <div class="accordion-body" id="reviewsBody">
         <div class="accordion-body-inner">
-          <div class="testimonials-grid">
-            <div class="testimonial">
+          <div class="testimonials-vertical">
+            <div class="testimonial-vertical">
               <div class="stars">⭐⭐⭐⭐⭐</div>
               <blockquote>"LETHAL DESIGN GROUP delivered exceptional structural plans for our commercial building. The team was professional and the drawings were spot-on. Highly recommend!"</blockquote>
               <div class="client-name">John Mwansa</div>
               <div class="client-company">Mwansa Properties</div>
             </div>
-            <div class="testimonial">
+            <div class="testimonial-vertical">
               <div class="stars">⭐⭐⭐⭐⭐</div>
               <blockquote>"The architectural drawings were precise and permit-ready. We'll definitely work with them again on our next project. A truly reliable team."</blockquote>
               <div class="client-name">Sarah Banda</div>
               <div class="client-company">Banda Constructions</div>
             </div>
-            <div class="testimonial">
+            <div class="testimonial-vertical">
               <div class="stars">⭐⭐⭐⭐⭐</div>
               <blockquote>"Working with LETHAL DESIGN GROUP was a game-changer for our renovation. Their attention to detail and quick turnaround saved us months of delays."</blockquote>
               <div class="client-name">Michael Chanda</div>
@@ -1268,24 +1354,24 @@
       </div>
       <div class="accordion-body" id="faqBody">
         <div class="accordion-body-inner">
-          <div class="faq-grid">
-            <div class="faq-item">
+          <div class="faq-vertical">
+            <div class="faq-item-vertical">
               <div class="question">What types of projects do you handle? <span class="icon">▾</span></div>
               <div class="answer">We handle residential, commercial, and industrial projects including new builds, renovations, extensions, and as-built documentation.</div>
             </div>
-            <div class="faq-item">
+            <div class="faq-item-vertical">
               <div class="question">Do you provide permit-ready drawings? <span class="icon">▾</span></div>
               <div class="answer">Yes! All our drawings are prepared to meet local building codes and permit requirements, making the approval process smooth.</div>
             </div>
-            <div class="faq-item">
+            <div class="faq-item-vertical">
               <div class="question">How long does a typical project take? <span class="icon">▾</span></div>
               <div class="answer">Timelines vary by project complexity. We provide clear timelines during our initial consultation and keep you updated throughout.</div>
             </div>
-            <div class="faq-item">
+            <div class="faq-item-vertical">
               <div class="question">Do you offer 3D visualizations? <span class="icon">▾</span></div>
               <div class="answer">Absolutely! We provide 3D models and renderings to help you visualize your project before construction begins.</div>
             </div>
-            <div class="faq-item">
+            <div class="faq-item-vertical">
               <div class="question">How do I get started? <span class="icon">▾</span></div>
               <div class="answer">Simply reach out via our contact form, WhatsApp, or email. We'll schedule a consultation to discuss your project needs and timeline.</div>
             </div>
@@ -1299,10 +1385,21 @@
 <!-- ═══════════ BOUNDARYLESS CTA ═══════════ -->
 <section style="border-bottom: none; padding: 40px 0;">
   <div class="container">
-    <div class="cta-boundaryless">
-      <h2>Where Great Design Meets Structural Integrity</h2>
-      <p>Get architectural and structural drawings that are accurate, permit-ready, and built for execution.</p>
-      <a href="#contact" class="btn">📩 Get Started Today</a>
+    <div class="cta-fancy">
+      <div class="cta-fancy-content">
+        <div class="cta-line cta-line-1">
+          <span class="cta-highlight">Where Great Design Meets</span>
+        </div>
+        <div class="cta-line cta-line-2">
+          <span class="cta-highlight cta-gradient-text">Structural Integrity</span>
+        </div>
+        <div class="cta-line cta-line-3">
+          <p>Get architectural and structural drawings that are accurate, permit-ready, and built for execution.</p>
+        </div>
+        <div class="cta-line cta-line-4">
+          <a href="#contact" class="btn cta-btn-glow">📩 Get Started Today</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1495,7 +1592,7 @@
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 
-  // ─── Accordion Toggle (Client Reviews & FAQ) ───
+  // ─── Accordion Toggle ───
   function setupAccordion(headerId, bodyId) {
     const header = document.getElementById(headerId);
     const body = document.getElementById(bodyId);
@@ -1510,7 +1607,7 @@
   setupAccordion('faqHeader', 'faqBody');
 
   // ─── FAQ Items Toggle ───
-  document.querySelectorAll('.faq-item').forEach(item => {
+  document.querySelectorAll('.faq-item-vertical').forEach(item => {
     item.addEventListener('click', function() {
       this.classList.toggle('active');
     });
