@@ -26,7 +26,7 @@
       --input-bg: rgba(6, 13, 26, 0.6);
       --section-even: rgba(74, 158, 255, 0.02);
       --slider-bg: rgba(6, 13, 26, 0.4);
-      --hero-overlay: rgba(6, 13, 26, 0.5);
+      --hero-overlay: rgba(6, 13, 26, 0.45);
     }
 
     /* ── Light Mode Variables ── */
@@ -47,7 +47,7 @@
       --input-bg: rgba(255, 255, 255, 0.8);
       --section-even: rgba(74, 158, 255, 0.04);
       --slider-bg: rgba(255, 255, 255, 0.6);
-      --hero-overlay: rgba(255, 255, 255, 0.4);
+      --hero-overlay: rgba(255, 255, 255, 0.3);
     }
 
     /* ── Reset & Base ── */
@@ -160,7 +160,7 @@
     .theme-toggle .icon.moon { right: 6px; color: #a8c8f0; }
     [data-theme="light"] .theme-toggle .slider { transform: translateX(24px); }
 
-    /* ── HERO SECTION (Full Screen with Slideshow) ── */
+    /* ── HERO SECTION ── */
     .hero {
       position: relative;
       width: 100%;
@@ -174,39 +174,57 @@
       border-bottom: 4px solid #4a9eff;
     }
 
-    /* Slideshow Background */
-    .hero-slideshow {
+    /* Feature 1: Animated Gradient Background */
+    .hero-gradient {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: 0;
+      background: linear-gradient(135deg, #0b1326, #1a2a4a, #0d1f3c, #162044);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease-in-out infinite alternate;
+      transition: background 0.3s ease;
     }
-    .hero-slideshow .slide {
+    [data-theme="light"] .hero-gradient {
+      background: linear-gradient(135deg, #e8edf5, #d0d8e8, #c0cde0, #e0e6f0);
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Feature 2: Architectural Grid Overlay */
+    .hero-grid {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      opacity: 0;
-      transition: opacity 2s ease-in-out;
-      transform: scale(1);
-      animation: kenBurns 20s ease-in-out infinite alternate;
+      z-index: 1;
+      background-image:
+        linear-gradient(rgba(74, 158, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 158, 255, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
     }
-    .hero-slideshow .slide.active {
-      opacity: 1;
-    }
-    .hero-slideshow .slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    [data-theme="light"] .hero-grid {
+      background-image:
+        linear-gradient(rgba(74, 158, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 158, 255, 0.06) 1px, transparent 1px);
     }
 
-    @keyframes kenBurns {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.08); }
+    /* Feature 3: Floating Particles */
+    #particles-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
     }
 
     /* Overlay */
@@ -218,7 +236,6 @@
       height: 100%;
       background: var(--hero-overlay);
       z-index: 1;
-      backdrop-filter: blur(2px);
       transition: background 0.3s ease;
     }
 
@@ -984,12 +1001,17 @@
   </div>
 </nav>
 
-<!-- ═══════════ HERO SECTION (Full Screen with Slideshow) ═══════════ -->
+<!-- ═══════════ HERO SECTION (With Decorations) ═══════════ -->
 <section class="hero" id="home">
-  <!-- Slideshow Background -->
-  <div class="hero-slideshow" id="heroSlideshow">
-    <!-- Images will be injected here by JavaScript -->
-  </div>
+  <!-- Feature 1: Animated Gradient -->
+  <div class="hero-gradient"></div>
+
+  <!-- Feature 2: Architectural Grid Overlay -->
+  <div class="hero-grid"></div>
+
+  <!-- Feature 3: Floating Particles -->
+  <canvas id="particles-canvas"></canvas>
+
   <!-- Overlay -->
   <div class="hero-overlay"></div>
 
@@ -1421,84 +1443,6 @@
     });
   });
 
-  // ─── HERO SLIDESHOW ───
-  const heroSlideshow = document.getElementById('heroSlideshow');
-  const imagePrefixes = ['arch', '3d', 'site'];
-  let heroImages = [];
-
-  // Collect all images
-  for (let p of imagePrefixes) {
-    let i = 1;
-    while (i <= 20) {
-      const imgName = `${p}-${i}.png`;
-      heroImages.push(imgName);
-      i++;
-    }
-  }
-
-  // Filter images that actually exist (using onload)
-  let existingImages = [];
-  let loadedCount = 0;
-
-  function checkImageExists(imgName, callback) {
-    const img = new Image();
-    img.src = imgName;
-    img.onload = function() {
-      existingImages.push(imgName);
-      loadedCount++;
-      if (loadedCount === heroImages.length) {
-        // All images checked, start slideshow
-        startHeroSlideshow();
-      }
-      callback();
-    };
-    img.onerror = function() {
-      loadedCount++;
-      if (loadedCount === heroImages.length) {
-        startHeroSlideshow();
-      }
-      callback();
-    };
-  }
-
-  function startHeroSlideshow() {
-    if (existingImages.length === 0) {
-      // Fallback: show a placeholder if no images
-      const slide = document.createElement('div');
-      slide.className = 'slide active';
-      slide.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg-secondary);color:var(--text-muted);font-size:1.5rem;">🖼️ Upload images to see the slideshow</div>`;
-      heroSlideshow.appendChild(slide);
-      return;
-    }
-
-    // Create slides for each existing image
-    existingImages.forEach((imgName, idx) => {
-      const slide = document.createElement('div');
-      slide.className = 'slide' + (idx === 0 ? ' active' : '');
-      const img = document.createElement('img');
-      img.src = imgName;
-      img.alt = 'LETHAL DESIGN GROUP Portfolio';
-      slide.appendChild(img);
-      heroSlideshow.appendChild(slide);
-    });
-
-    // Start rotating slides
-    let currentSlide = 0;
-    const slides = heroSlideshow.querySelectorAll('.slide');
-    const totalSlides = slides.length;
-
-    setInterval(() => {
-      slides.forEach(s => s.classList.remove('active'));
-      currentSlide = (currentSlide + 1) % totalSlides;
-      slides[currentSlide].classList.add('active');
-    }, 6000);
-  }
-
-  // Start checking images
-  heroImages.forEach(imgName => {
-    checkImageExists(imgName, () => {});
-  });
-
   // ─── DYNAMIC SLIDER LOADER ───
   const categories = [
     { id: 'architectural', prefix: 'arch', maxImages: 50 },
@@ -1535,7 +1479,6 @@
     if (!wrapper) return;
 
     wrapper.innerHTML = '';
-    let loadedCount = 0;
 
     for (let i = 1; i <= category.maxImages; i++) {
       const imgName = `${category.prefix}-${i}.png`;
@@ -1606,6 +1549,86 @@
         counter.textContent = `0 / 0`;
       }
     }
+  });
+
+  // ─── FLOATING PARTICLES (Feature 3) ───
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let animationId;
+
+  function resizeCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+  }
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 3 + 1;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.speedY = (Math.random() - 0.5) * 0.3;
+      this.opacity = Math.random() * 0.5 + 0.1;
+    }
+
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+
+      if (this.x > canvas.width) this.x = 0;
+      if (this.x < 0) this.x = canvas.width;
+      if (this.y > canvas.height) this.y = 0;
+      if (this.y < 0) this.y = canvas.height;
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(74, 158, 255, ${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  function initParticles() {
+    const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 12000));
+    particles = [];
+    for (let i = 0; i < count; i++) {
+      particles.push(new Particle());
+    }
+  }
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+    animationId = requestAnimationFrame(animateParticles);
+  }
+
+  function startParticles() {
+    resizeCanvas();
+    initParticles();
+    if (animationId) cancelAnimationFrame(animationId);
+    animateParticles();
+  }
+
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    initParticles();
+  });
+
+  // Start particles when the page loads
+  window.addEventListener('load', startParticles);
+
+  // ─── Reinitialize particles when theme changes ───
+  themeToggle.addEventListener('click', () => {
+    setTimeout(() => {
+      resizeCanvas();
+      initParticles();
+    }, 100);
   });
 </script>
 
