@@ -8,14 +8,55 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
+    /* ── CSS Variables (Dark Mode Default) ── */
+    :root {
+      --bg-primary: #0b1326;
+      --bg-secondary: #060d1a;
+      --bg-card: rgba(6, 13, 26, 0.7);
+      --bg-card-hover: rgba(6, 13, 26, 0.5);
+      --text-primary: #e8edf5;
+      --text-secondary: #c8d6e5;
+      --text-muted: #a8c8f0;
+      --text-dark: #060d1a;
+      --border-color: rgba(74, 158, 255, 0.12);
+      --border-light: rgba(74, 158, 255, 0.08);
+      --shadow-color: rgba(74, 158, 255, 0.06);
+      --glass-bg: rgba(6, 13, 26, 0.6);
+      --nav-bg: rgba(6, 13, 26, 0.97);
+      --input-bg: rgba(6, 13, 26, 0.6);
+      --section-even: rgba(74, 158, 255, 0.02);
+      --slider-bg: rgba(6, 13, 26, 0.4);
+    }
+
+    /* ── Light Mode Variables ── */
+    [data-theme="light"] {
+      --bg-primary: #f4f6fa;
+      --bg-secondary: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.85);
+      --bg-card-hover: rgba(255, 255, 255, 0.95);
+      --text-primary: #1a1a2e;
+      --text-secondary: #2d2d44;
+      --text-muted: #4a5a7a;
+      --text-dark: #ffffff;
+      --border-color: rgba(74, 158, 255, 0.15);
+      --border-light: rgba(74, 158, 255, 0.08);
+      --shadow-color: rgba(0, 0, 0, 0.06);
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --nav-bg: rgba(255, 255, 255, 0.97);
+      --input-bg: rgba(255, 255, 255, 0.8);
+      --section-even: rgba(74, 158, 255, 0.04);
+      --slider-bg: rgba(255, 255, 255, 0.6);
+    }
+
     /* ── Reset & Base ── */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
-      background: #0b1326;
-      color: #e8edf5;
+      background: var(--bg-primary);
+      color: var(--text-primary);
       line-height: 1.6;
+      transition: background 0.3s ease, color 0.3s ease;
     }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
@@ -23,12 +64,13 @@
     nav {
       position: sticky;
       top: 0;
-      background: rgba(6, 13, 26, 0.97);
+      background: var(--nav-bg);
       backdrop-filter: blur(16px);
       padding: 14px 0;
       z-index: 100;
       border-bottom: 2px solid rgba(74, 158, 255, 0.15);
-      box-shadow: 0 2px 30px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+      transition: background 0.3s ease;
     }
     .nav-container {
       display: flex;
@@ -62,8 +104,13 @@
       font-size: 1.1rem;
       letter-spacing: 0.5px;
     }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
     .nav-links a {
-      color: #c8d6e5;
+      color: var(--text-secondary);
       text-decoration: none;
       margin: 0 14px;
       font-weight: 500;
@@ -74,15 +121,62 @@
     .nav-links a:hover { color: #4a9eff; }
     .nav-links a:last-child { margin-right: 0; }
 
+    /* ── Dark/Light Toggle Switch ── */
+    .theme-toggle {
+      position: relative;
+      width: 52px;
+      height: 28px;
+      background: var(--bg-primary);
+      border: 2px solid rgba(74, 158, 255, 0.2);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover {
+      border-color: #4a9eff;
+    }
+    .theme-toggle .slider {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: #4a9eff;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+    .theme-toggle .icon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.8rem;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .theme-toggle .icon.sun {
+      left: 6px;
+      color: #f7c948;
+    }
+    .theme-toggle .icon.moon {
+      right: 6px;
+      color: #a8c8f0;
+    }
+    /* Light mode toggle state */
+    [data-theme="light"] .theme-toggle .slider {
+      transform: translateX(24px);
+    }
+
     /* ── Header ── */
     header {
-      background: #060d1a;
-      color: white;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
       padding: 50px 0 40px;
       border-bottom: 4px solid #4a9eff;
       position: relative;
       overflow: hidden;
       text-align: center;
+      transition: background 0.3s ease;
     }
     header::before {
       content: "";
@@ -110,7 +204,7 @@
       font-weight: 900;
       letter-spacing: 3px;
       text-transform: uppercase;
-      text-shadow: 0 2px 30px rgba(0,0,0,0.3);
+      text-shadow: 0 2px 30px rgba(0,0,0,0.1);
     }
     header h1 span { color: #4a9eff; }
     header .tagline {
@@ -119,7 +213,7 @@
       margin-top: 8px;
       font-weight: 300;
       letter-spacing: 1px;
-      color: #a8c8f0;
+      color: var(--text-muted);
     }
     .typing-text {
       display: inline-block;
@@ -148,13 +242,13 @@
     .contact-bar a:hover { text-decoration: underline; color: #6db4ff; }
 
     /* ── Sections ── */
-    section { padding: 55px 0; border-bottom: 1px solid rgba(74, 158, 255, 0.06); }
+    section { padding: 55px 0; border-bottom: 1px solid var(--border-light); transition: background 0.3s ease; }
     section:last-child { border-bottom: none; }
-    section:nth-child(even) { background: rgba(74, 158, 255, 0.02); }
+    section:nth-child(even) { background: var(--section-even); }
     h2 {
       font-size: 2.2rem;
       margin-bottom: 24px;
-      color: #ffffff;
+      color: var(--text-primary);
       border-left: 6px solid #4a9eff;
       padding-left: 18px;
       text-transform: uppercase;
@@ -168,7 +262,7 @@
       gap: 35px;
       align-items: start;
     }
-    .about-grid p { font-size: 1.1rem; color: #c8d6e5; }
+    .about-grid p { font-size: 1.1rem; color: var(--text-secondary); }
     .about-grid ul {
       list-style: none;
       margin-top: 16px;
@@ -179,8 +273,8 @@
       align-items: center;
       gap: 12px;
       font-weight: 500;
-      color: #c8d6e5;
-      border-bottom: 1px solid rgba(74, 158, 255, 0.06);
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-light);
     }
     .about-grid ul li:last-child { border-bottom: none; }
     .about-grid ul li::before {
@@ -197,13 +291,13 @@
       gap: 20px;
     }
     .precision-card {
-      background: rgba(6, 13, 26, 0.7);
+      background: var(--bg-card);
       backdrop-filter: blur(8px);
       padding: 30px 20px;
       border-radius: 14px;
       text-align: center;
-      border: 1px solid rgba(74, 158, 255, 0.1);
-      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      border: 1px solid var(--border-color);
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s, background 0.3s;
       position: relative;
       overflow: hidden;
     }
@@ -224,7 +318,7 @@
     .precision-card:hover {
       transform: translateY(-6px);
       border-color: rgba(74, 158, 255, 0.3);
-      box-shadow: 0 12px 40px rgba(74, 158, 255, 0.08);
+      box-shadow: 0 12px 40px var(--shadow-color);
     }
     .precision-icon {
       font-size: 2.8rem;
@@ -234,12 +328,12 @@
     .precision-title {
       font-size: 1.2rem;
       font-weight: 700;
-      color: #ffffff;
+      color: var(--text-primary);
       margin-bottom: 6px;
     }
     .precision-desc {
       font-size: 0.9rem;
-      color: #a8c8f0;
+      color: var(--text-muted);
       font-weight: 300;
     }
 
@@ -251,22 +345,22 @@
       margin-top: 10px;
     }
     .trust-item {
-      background: rgba(6, 13, 26, 0.5);
+      background: var(--bg-card-hover);
       backdrop-filter: blur(8px);
       padding: 18px 22px;
       border-radius: 12px;
-      border: 1px solid rgba(74, 158, 255, 0.08);
+      border: 1px solid var(--border-light);
       display: flex;
       align-items: center;
       gap: 14px;
-      transition: transform 0.25s, border-color 0.25s;
+      transition: transform 0.25s, border-color 0.25s, background 0.3s;
     }
     .trust-item:hover {
       transform: translateY(-3px);
       border-color: rgba(74, 158, 255, 0.25);
     }
     .trust-icon { font-size: 1.4rem; flex-shrink: 0; }
-    .trust-text { color: #e8edf5; font-weight: 500; font-size: 0.95rem; }
+    .trust-text { color: var(--text-secondary); font-weight: 500; font-size: 0.95rem; }
 
     /* ── Services ── */
     .services-grid {
@@ -276,26 +370,26 @@
       margin-top: 10px;
     }
     .service-card {
-      background: rgba(6, 13, 26, 0.7);
+      background: var(--bg-card);
       backdrop-filter: blur(8px);
       padding: 24px 18px;
       border-radius: 14px;
       text-align: center;
-      border: 1px solid rgba(74, 158, 255, 0.1);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
       font-weight: 600;
-      color: #e8edf5;
-      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      color: var(--text-primary);
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s, background 0.3s;
     }
     .service-card:hover {
       transform: translateY(-4px);
       border-color: #4a9eff;
-      box-shadow: 0 8px 40px rgba(74, 158, 255, 0.08);
+      box-shadow: 0 8px 40px var(--shadow-color);
     }
     .service-card small {
       display: block;
       font-weight: 400;
-      color: #8899bb;
+      color: var(--text-muted);
       font-size: 0.85rem;
       margin-top: 4px;
     }
@@ -308,10 +402,10 @@
       flex-wrap: wrap;
     }
     .tab-btn {
-      background: rgba(6, 13, 26, 0.6);
-      color: #a8c8f0;
+      background: var(--bg-card-hover);
+      color: var(--text-secondary);
       padding: 12px 28px;
-      border: 2px solid rgba(74, 158, 255, 0.15);
+      border: 2px solid var(--border-color);
       border-radius: 50px;
       cursor: pointer;
       font-size: 0.95rem;
@@ -349,8 +443,9 @@
       margin: 0 auto;
       overflow: hidden;
       border-radius: 14px;
-      background: rgba(6, 13, 26, 0.4);
-      border: 1px solid rgba(74, 158, 255, 0.08);
+      background: var(--slider-bg);
+      border: 1px solid var(--border-light);
+      transition: background 0.3s ease;
     }
     .slider-wrapper {
       display: flex;
@@ -367,17 +462,18 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      background: #0b1326;
+      background: var(--bg-primary);
       cursor: pointer;
+      transition: background 0.3s ease;
     }
     .slider-btn {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(6, 13, 26, 0.8);
+      background: rgba(0,0,0,0.7);
       backdrop-filter: blur(8px);
       color: white;
-      border: 2px solid rgba(74, 158, 255, 0.2);
+      border: 2px solid rgba(255,255,255,0.15);
       padding: 16px 22px;
       cursor: pointer;
       font-size: 1.5rem;
@@ -392,20 +488,16 @@
       border-color: #4a9eff;
       box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
     }
-    .slider-btn.prev {
-      left: 16px;
-    }
-    .slider-btn.next {
-      right: 16px;
-    }
+    .slider-btn.prev { left: 16px; }
+    .slider-btn.next { right: 16px; }
     .slider-counter {
       text-align: center;
       padding: 12px 0;
-      color: #a8c8f0;
+      color: var(--text-muted);
       font-size: 0.9rem;
       font-weight: 500;
       letter-spacing: 0.5px;
-      background: rgba(6, 13, 26, 0.3);
+      background: rgba(0,0,0,0.1);
     }
 
     /* ── Lightbox ── */
@@ -416,7 +508,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(6, 13, 26, 0.97);
+      background: rgba(0, 0, 0, 0.95);
       z-index: 2000;
       align-items: center;
       justify-content: center;
@@ -451,12 +543,12 @@
       margin-top: 10px;
     }
     .testimonial {
-      background: rgba(6, 13, 26, 0.6);
+      background: var(--bg-card-hover);
       backdrop-filter: blur(8px);
       padding: 28px 24px;
       border-radius: 14px;
-      border: 1px solid rgba(74, 158, 255, 0.08);
-      transition: transform 0.25s, border-color 0.25s;
+      border: 1px solid var(--border-light);
+      transition: transform 0.25s, border-color 0.25s, background 0.3s;
     }
     .testimonial:hover {
       transform: translateY(-4px);
@@ -470,13 +562,13 @@
     }
     .testimonial blockquote {
       font-style: italic;
-      color: #c8d6e5;
+      color: var(--text-secondary);
       font-size: 1rem;
       line-height: 1.7;
       margin-bottom: 12px;
     }
     .testimonial .client-name { font-weight: 700; color: #4a9eff; }
-    .testimonial .client-company { color: #8899bb; font-size: 0.85rem; }
+    .testimonial .client-company { color: var(--text-muted); font-size: 0.85rem; }
 
     /* ── FAQ ── */
     .faq-grid {
@@ -486,18 +578,18 @@
       margin-top: 10px;
     }
     .faq-item {
-      background: rgba(6, 13, 26, 0.6);
+      background: var(--bg-card-hover);
       backdrop-filter: blur(8px);
       padding: 20px 24px;
       border-radius: 12px;
-      border: 1px solid rgba(74, 158, 255, 0.06);
-      transition: border-color 0.25s;
+      border: 1px solid var(--border-light);
+      transition: border-color 0.25s, background 0.3s;
       cursor: pointer;
     }
     .faq-item:hover { border-color: rgba(74, 158, 255, 0.2); }
     .faq-item .question {
       font-weight: 700;
-      color: #ffffff;
+      color: var(--text-primary);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -508,7 +600,7 @@
       transition: transform 0.3s;
     }
     .faq-item .answer {
-      color: #a8c8f0;
+      color: var(--text-muted);
       margin-top: 10px;
       max-height: 0;
       overflow: hidden;
@@ -531,19 +623,19 @@
     }
     .contact-info h3 {
       font-size: 1.4rem;
-      color: #ffffff;
+      color: var(--text-primary);
       margin-bottom: 12px;
     }
-    .contact-info p { color: #a8c8f0; margin-bottom: 16px; }
+    .contact-info p { color: var(--text-muted); margin-bottom: 16px; }
     .contact-info .detail {
       display: flex;
       align-items: center;
       gap: 12px;
       padding: 10px 0;
-      border-bottom: 1px solid rgba(74, 158, 255, 0.06);
+      border-bottom: 1px solid var(--border-light);
     }
     .contact-info .detail:last-child { border-bottom: none; }
-    .contact-info .detail strong { color: #e8edf5; }
+    .contact-info .detail strong { color: var(--text-secondary); }
     .contact-info .detail a { color: #4a9eff; text-decoration: none; }
 
     .form-group {
@@ -554,24 +646,24 @@
       font-weight: 600;
       margin-bottom: 6px;
       font-size: 0.9rem;
-      color: #c8d6e5;
+      color: var(--text-secondary);
     }
     .form-group input,
     .form-group textarea,
     .form-group select {
       width: 100%;
       padding: 12px 16px;
-      border: 2px solid rgba(74, 158, 255, 0.12);
+      border: 2px solid var(--border-color);
       border-radius: 10px;
       font-size: 1rem;
       font-family: inherit;
       transition: border-color 0.25s, box-shadow 0.25s;
-      background: rgba(6, 13, 26, 0.6);
-      color: #e8edf5;
+      background: var(--input-bg);
+      color: var(--text-primary);
       backdrop-filter: blur(4px);
     }
     .form-group input::placeholder,
-    .form-group textarea::placeholder { color: #4a6a8a; }
+    .form-group textarea::placeholder { color: var(--text-muted); opacity: 0.5; }
     .form-group input:focus,
     .form-group textarea:focus,
     .form-group select:focus {
@@ -580,8 +672,8 @@
       box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.06);
     }
     .form-group select option {
-      background: #0b1326;
-      color: #e8edf5;
+      background: var(--bg-primary);
+      color: var(--text-primary);
     }
     .form-group textarea {
       resize: vertical;
@@ -609,7 +701,7 @@
     .form-success {
       display: none;
       background: rgba(0, 200, 83, 0.1);
-      color: #66d9a0;
+      color: #2d7a4a;
       padding: 16px 20px;
       border-radius: 10px;
       border: 1px solid rgba(0, 200, 83, 0.15);
@@ -620,7 +712,7 @@
     .form-error {
       display: none;
       background: rgba(255, 71, 87, 0.1);
-      color: #ff6b7a;
+      color: #c0392b;
       padding: 16px 20px;
       border-radius: 10px;
       border: 1px solid rgba(255, 71, 87, 0.15);
@@ -628,6 +720,8 @@
       text-align: center;
       font-weight: 500;
     }
+    [data-theme="light"] .form-success { color: #155724; }
+    [data-theme="light"] .form-error { color: #721c24; }
 
     /* ── WhatsApp Alternative ── */
     .whatsapp-alternative {
@@ -645,7 +739,7 @@
     }
     .whatsapp-alternative p {
       font-size: 1.05rem;
-      color: #a8e0c0;
+      color: #2d7a4a;
       margin: 0;
       font-weight: 500;
     }
@@ -681,14 +775,14 @@
       align-items: center;
       gap: 8px;
       background: rgba(74, 158, 255, 0.08);
-      color: #c8d6e5;
+      color: var(--text-secondary);
       padding: 10px 20px;
       border-radius: 50px;
       text-decoration: none;
       font-weight: 500;
       font-size: 0.9rem;
       transition: background 0.25s, color 0.25s, transform 0.25s;
-      border: 1px solid rgba(74, 158, 255, 0.06);
+      border: 1px solid var(--border-light);
     }
     .social-links a:hover {
       background: rgba(74, 158, 255, 0.15);
@@ -703,14 +797,14 @@
       align-items: center;
       gap: 10px;
       background: rgba(74, 158, 255, 0.08);
-      color: #c8d6e5;
+      color: var(--text-secondary);
       padding: 12px 28px;
       border-radius: 50px;
       text-decoration: none;
       font-weight: 600;
       font-size: 0.95rem;
       transition: background 0.25s, color 0.25s, transform 0.25s;
-      border: 1px solid rgba(74, 158, 255, 0.1);
+      border: 1px solid var(--border-light);
       margin-top: 10px;
     }
     .pdf-download:hover {
@@ -721,17 +815,18 @@
 
     /* ── CTA ── */
     .cta-box {
-      background: #060d1a;
-      color: white;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
       padding: 50px 35px;
       border-radius: 16px;
       text-align: center;
       border: 2px solid #4a9eff;
-      box-shadow: 0 4px 40px rgba(74, 158, 255, 0.04);
+      box-shadow: 0 4px 40px var(--shadow-color);
+      transition: background 0.3s ease;
     }
     .cta-box h3 { font-size: 2rem; text-transform: uppercase; letter-spacing: 1px; }
     .cta-box h3 span { color: #4a9eff; }
-    .cta-box p { opacity: 0.85; margin: 12px 0 24px; font-size: 1.1rem; color: #a8c8f0; }
+    .cta-box p { opacity: 0.85; margin: 12px 0 24px; font-size: 1.1rem; color: var(--text-muted); }
     .btn {
       display: inline-block;
       background: #4a9eff;
@@ -751,14 +846,15 @@
 
     /* ── Footer ── */
     footer {
-      background: #060d1a;
-      color: #4a6a8a;
+      background: var(--bg-secondary);
+      color: var(--text-muted);
       text-align: center;
       padding: 32px 0;
       font-size: 0.9rem;
-      border-top: 3px solid rgba(74, 158, 255, 0.06);
+      border-top: 3px solid var(--border-light);
+      transition: background 0.3s ease;
     }
-    footer strong { color: #e8edf5; }
+    footer strong { color: var(--text-primary); }
     footer a { color: #4a9eff; text-decoration: none; font-weight: 500; }
     footer a:hover { text-decoration: underline; }
     .footer-social {
@@ -768,7 +864,7 @@
       gap: 20px;
     }
     .footer-social a {
-      color: #4a6a8a;
+      color: var(--text-muted);
       font-size: 1.2rem;
       transition: color 0.25s;
     }
@@ -829,6 +925,10 @@
       }
       .slider-btn.prev { left: 8px; }
       .slider-btn.next { right: 8px; }
+      .theme-toggle { width: 48px; height: 26px; }
+      .theme-toggle .slider { width: 18px; height: 18px; }
+      [data-theme="light"] .theme-toggle .slider { transform: translateX(22px); }
+      .nav-right { gap: 10px; }
     }
     @media (max-width: 450px) {
       .services-grid { grid-template-columns: 1fr; }
@@ -851,12 +951,20 @@
       <img src="logo.png" alt="LETHAL DESIGN GROUP" class="nav-logo-img" />
       <span class="nav-logo-text">LDG</span>
     </a>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#testimonials">Testimonials</a>
-      <a href="#contact">Contact</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <!-- Dark/Light Mode Toggle -->
+      <div class="theme-toggle" id="themeToggle" role="button" aria-label="Toggle dark/light mode">
+        <span class="icon sun">☀️</span>
+        <span class="icon moon">🌙</span>
+        <span class="slider"></span>
+      </div>
     </div>
   </div>
 </nav>
@@ -918,10 +1026,10 @@
 </section>
 
 <!-- ═══════════ TRUST SECTION ═══════════ -->
-<section style="background: rgba(74, 158, 255, 0.02);">
+<section style="background: var(--section-even);">
   <div class="container">
     <h2>Why Clients Choose Us</h2>
-    <p style="text-align:center; color:#a8c8f0; margin-bottom:30px; font-size:1.1rem; font-weight:300; letter-spacing:0.5px;">
+    <p style="text-align:center; color:var(--text-muted); margin-bottom:30px; font-size:1.1rem; font-weight:300; letter-spacing:0.5px;">
       Built on Results That Speak
     </p>
     <div class="trust-grid">
@@ -973,10 +1081,10 @@
 </section>
 
 <!-- ═══════════ PORTFOLIO WITH SLIDING GALLERY ═══════════ -->
-<section id="portfolio" style="background: rgba(74, 158, 255, 0.02);">
+<section id="portfolio" style="background: var(--section-even);">
   <div class="container">
     <h2>Our Portfolio</h2>
-    <p style="margin-bottom:20px; color:#a8c8f0;">Click any image to enlarge. Use the arrows to browse through projects.</p>
+    <p style="margin-bottom:20px; color:var(--text-muted);">Click any image to enlarge. Use the arrows to browse through projects.</p>
 
     <!-- Tab Buttons -->
     <div class="tab-buttons">
@@ -1068,7 +1176,7 @@
 </section>
 
 <!-- ═══════════ FAQ ═══════════ -->
-<section id="faq" style="background: rgba(74, 158, 255, 0.02);">
+<section id="faq" style="background: var(--section-even);">
   <div class="container">
     <h2>Frequently Asked Questions</h2>
     <div class="faq-grid">
@@ -1142,7 +1250,7 @@
           </div>
         </div>
         <div style="margin-top:20px;">
-          <p style="color:#a8c8f0; margin-bottom:12px;">Connect with us:</p>
+          <p style="color:var(--text-muted); margin-bottom:12px;">Connect with us:</p>
           <div class="social-links">
             <a href="#"><span class="icon">🔗</span> LinkedIn</a>
             <a href="#"><span class="icon">📘</span> Facebook</a>
@@ -1237,6 +1345,18 @@
 
 <!-- ═══════════ JAVASCRIPT ═══════════ -->
 <script>
+  // ─── Dark/Light Mode Toggle ───
+  const themeToggle = document.getElementById('themeToggle');
+  const currentTheme = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+
+  themeToggle.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const newTheme = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  });
+
   // ─── Typing Effect ───
   const text = "Architectural & Structural Designs — Precision. Power. Perfection.";
   const typingElement = document.getElementById('typingText');
@@ -1350,7 +1470,6 @@
       const targetContent = document.getElementById(`tab-${tabId}`);
       if (targetContent) {
         targetContent.classList.add('active');
-        // Reset slider position when switching tabs
         const sliderWrapper = targetContent.querySelector('.slider-wrapper');
         if (sliderWrapper) {
           sliderWrapper.style.transform = 'translateX(0)';
@@ -1378,7 +1497,6 @@
     const slides = wrapper.children;
     const totalSlides = slides.length;
 
-    // Initialize state for this slider
     if (!sliderStates[tabId]) {
       sliderStates[tabId] = { currentIndex: 0 };
     }
@@ -1386,18 +1504,15 @@
     let currentIndex = sliderStates[tabId].currentIndex;
     let newIndex = currentIndex + direction;
 
-    // Loop around
     if (newIndex < 0) newIndex = totalSlides - 1;
     if (newIndex >= totalSlides) newIndex = 0;
 
     sliderStates[tabId].currentIndex = newIndex;
 
-    // Move the slider
     wrapper.style.transform = `translateX(-${newIndex * 100}%)`;
     counter.textContent = `${newIndex + 1} / ${totalSlides}`;
   }
 
-  // ─── Initialize Sliders ───
   document.querySelectorAll('.tab-content').forEach(tab => {
     const wrapper = tab.querySelector('.slider-wrapper');
     const counter = tab.querySelector('.slider-counter');
