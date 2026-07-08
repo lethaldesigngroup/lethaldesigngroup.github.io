@@ -300,7 +300,115 @@
       margin-top: 4px;
     }
 
-    /* ── Gallery ── */
+    /* ── Portfolio Tabs ── */
+    .tab-buttons {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: rgba(6, 13, 26, 0.6);
+      color: #a8c8f0;
+      padding: 12px 28px;
+      border: 2px solid rgba(74, 158, 255, 0.15);
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+    }
+    .tab-btn:hover {
+      background: rgba(74, 158, 255, 0.1);
+      border-color: rgba(74, 158, 255, 0.3);
+    }
+    .tab-btn.active {
+      background: #4a9eff;
+      color: #060d1a;
+      border-color: #4a9eff;
+      box-shadow: 0 4px 20px rgba(74, 158, 255, 0.25);
+    }
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Slider ── */
+    .slider-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 14px;
+      background: rgba(6, 13, 26, 0.4);
+      border: 1px solid rgba(74, 158, 255, 0.08);
+    }
+    .slider-wrapper {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .slide {
+      min-width: 100%;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #0b1326;
+      cursor: pointer;
+    }
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(6, 13, 26, 0.8);
+      backdrop-filter: blur(8px);
+      color: white;
+      border: 2px solid rgba(74, 158, 255, 0.2);
+      padding: 16px 22px;
+      cursor: pointer;
+      font-size: 1.5rem;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      z-index: 10;
+      line-height: 1;
+    }
+    .slider-btn:hover {
+      background: #4a9eff;
+      color: #060d1a;
+      border-color: #4a9eff;
+      box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
+    }
+    .slider-btn.prev {
+      left: 16px;
+    }
+    .slider-btn.next {
+      right: 16px;
+    }
+    .slider-counter {
+      text-align: center;
+      padding: 12px 0;
+      color: #a8c8f0;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      background: rgba(6, 13, 26, 0.3);
+    }
+
+    /* ── Gallery (Fallback) ── */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -327,18 +435,6 @@
       object-fit: cover;
       display: block;
       background: #0b1326;
-    }
-    .gallery-placeholder {
-      background: linear-gradient(135deg, #0b1326, #162044);
-      color: #4a6a9a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 260px;
-      font-size: 0.9rem;
-      opacity: 0.7;
-      letter-spacing: 1px;
-      border-bottom: 2px solid rgba(74, 158, 255, 0.06);
     }
 
     /* ── Lightbox ── */
@@ -740,7 +836,6 @@
       .about-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
       .contact-bar { flex-direction: column; gap: 6px; }
-      .gallery { grid-template-columns: 1fr; }
       .cta-box h3 { font-size: 1.5rem; }
       .services-grid { grid-template-columns: 1fr 1fr; }
       .nav-container { flex-direction: column; gap: 10px; }
@@ -756,11 +851,23 @@
       .nav-logo-img { width: 40px; height: 40px; }
       .nav-logo-text { font-size: 0.9rem; }
       .contact-bar { padding: 12px 16px; }
+      .slide { height: 300px; }
+      .slider-btn {
+        padding: 10px 14px;
+        font-size: 1rem;
+      }
+      .slider-btn.prev { left: 8px; }
+      .slider-btn.next { right: 8px; }
     }
     @media (max-width: 450px) {
       .services-grid { grid-template-columns: 1fr; }
       .trust-grid { grid-template-columns: 1fr; }
       .nav-logo-img { width: 36px; height: 36px; }
+      .slide { height: 220px; }
+      .slider-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
     }
   </style>
 </head>
@@ -894,34 +1001,77 @@
   </div>
 </section>
 
-<!-- ═══════════ PORTFOLIO ═══════════ -->
+<!-- ═══════════ PORTFOLIO WITH SLIDING GALLERY ═══════════ -->
 <section id="portfolio" style="background: rgba(74, 158, 255, 0.02);">
   <div class="container">
     <h2>Our Portfolio</h2>
-    <p style="margin-bottom:20px; color:#a8c8f0;">Click any image to enlarge — replace these with your actual drawings.</p>
-    <div class="gallery">
-      <div class="gallery-item">
-        <div class="gallery-placeholder">📐 Drawing 1</div>
-      </div>
-      <div class="gallery-item">
-        <div class="gallery-placeholder">🏗️ Drawing 2</div>
-      </div>
-      <div class="gallery-item">
-        <div class="gallery-placeholder">🧱 Drawing 3</div>
-      </div>
-      <div class="gallery-item">
-        <div class="gallery-placeholder">🏛️ Drawing 4</div>
-      </div>
-      <div class="gallery-item">
-        <div class="gallery-placeholder">📋 Drawing 5</div>
-      </div>
-      <div class="gallery-item">
-        <div class="gallery-placeholder">🔍 Drawing 6</div>
+    <p style="margin-bottom:20px; color:#a8c8f0;">Click any image to enlarge. Use the arrows to browse through projects.</p>
+
+    <!-- Tab Buttons -->
+    <div class="tab-buttons">
+      <button class="tab-btn active" data-tab="architectural">🏛️ Architectural</button>
+      <button class="tab-btn" data-tab="3d">🎯 3D Visualizations</button>
+      <button class="tab-btn" data-tab="siteworks">🔍 Site Works</button>
+    </div>
+
+    <!-- ═══ TAB 1: ARCHITECTURAL ═══ -->
+    <div class="tab-content active" id="tab-architectural">
+      <div class="slider-container">
+        <div class="slider-wrapper" id="slider-architectural">
+          <!-- Replace with your actual image filenames -->
+          <div class="slide"><img src="arch-1.jpg" alt="Architectural Design 1" /></div>
+          <div class="slide"><img src="arch-2.jpg" alt="Architectural Design 2" /></div>
+          <div class="slide"><img src="arch-3.jpg" alt="Architectural Design 3" /></div>
+          <div class="slide"><img src="arch-4.jpg" alt="Architectural Design 4" /></div>
+          <div class="slide"><img src="arch-5.jpg" alt="Architectural Design 5" /></div>
+          <div class="slide"><img src="arch-6.jpg" alt="Architectural Design 6" /></div>
+        </div>
+        <button class="slider-btn prev" onclick="moveSlider('architectural', -1)">❮</button>
+        <button class="slider-btn next" onclick="moveSlider('architectural', 1)">❯</button>
+        <div class="slider-counter" id="counter-architectural">1 / 6</div>
       </div>
     </div>
-    <div style="text-align: center; margin-top: 24px;">
+
+    <!-- ═══ TAB 2: 3D VISUALIZATIONS ═══ -->
+    <div class="tab-content" id="tab-3d">
+      <div class="slider-container">
+        <div class="slider-wrapper" id="slider-3d">
+          <!-- Replace with your actual image filenames -->
+          <div class="slide"><img src="3d-1.jpg" alt="3D Model 1" /></div>
+          <div class="slide"><img src="3d-2.jpg" alt="3D Model 2" /></div>
+          <div class="slide"><img src="3d-3.jpg" alt="3D Model 3" /></div>
+          <div class="slide"><img src="3d-4.jpg" alt="3D Model 4" /></div>
+          <div class="slide"><img src="3d-5.jpg" alt="3D Model 5" /></div>
+          <div class="slide"><img src="3d-6.jpg" alt="3D Model 6" /></div>
+        </div>
+        <button class="slider-btn prev" onclick="moveSlider('3d', -1)">❮</button>
+        <button class="slider-btn next" onclick="moveSlider('3d', 1)">❯</button>
+        <div class="slider-counter" id="counter-3d">1 / 6</div>
+      </div>
+    </div>
+
+    <!-- ═══ TAB 3: SITE WORKS ═══ -->
+    <div class="tab-content" id="tab-siteworks">
+      <div class="slider-container">
+        <div class="slider-wrapper" id="slider-siteworks">
+          <!-- Replace with your actual image filenames -->
+          <div class="slide"><img src="site-1.jpg" alt="Site Work 1" /></div>
+          <div class="slide"><img src="site-2.jpg" alt="Site Work 2" /></div>
+          <div class="slide"><img src="site-3.jpg" alt="Site Work 3" /></div>
+          <div class="slide"><img src="site-4.jpg" alt="Site Work 4" /></div>
+          <div class="slide"><img src="site-5.jpg" alt="Site Work 5" /></div>
+          <div class="slide"><img src="site-6.jpg" alt="Site Work 6" /></div>
+        </div>
+        <button class="slider-btn prev" onclick="moveSlider('siteworks', -1)">❮</button>
+        <button class="slider-btn next" onclick="moveSlider('siteworks', 1)">❯</button>
+        <div class="slider-counter" id="counter-siteworks">1 / 6</div>
+      </div>
+    </div>
+
+    <!-- PDF Download -->
+    <div style="text-align: center; margin-top: 30px;">
       <a href="#" class="pdf-download" onclick="alert('📄 Upload your portfolio PDF to this repo and update the href!'); return false;">
-        📄 Download Portfolio PDF
+        📄 Download Full Portfolio PDF
       </a>
     </div>
   </div>
@@ -1188,24 +1338,23 @@
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
 
-  document.querySelectorAll('.gallery-item img').forEach(img => {
+  function openLightbox(src) {
+    lightboxImg.src = src;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  document.querySelectorAll('.slide img').forEach(img => {
     img.addEventListener('click', function(e) {
       e.stopPropagation();
-      lightboxImg.src = this.src;
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      openLightbox(this.src);
     });
   });
 
-  // Support for placeholder clicks (for when images are added later)
-  document.querySelectorAll('.gallery-placeholder').forEach(placeholder => {
-    placeholder.addEventListener('click', function() {
-      const img = this.querySelector('img');
-      if (img) {
-        lightboxImg.src = img.src;
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
+  document.querySelectorAll('.gallery-item img').forEach(img => {
+    img.addEventListener('click', function(e) {
+      e.stopPropagation();
+      openLightbox(this.src);
     });
   });
 
@@ -1230,38 +1379,79 @@
     });
   });
 
-  // ─── Stats Counter Animation ───
-  function animateCounter(element, target, suffix = '') {
-    let current = 0;
-    const step = Math.ceil(target / 40);
-    const interval = setInterval(() => {
-      current += step;
-      if (current >= target) {
-        current = target;
-        clearInterval(interval);
+  // ─── Portfolio Tabs ───
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+
+      this.classList.add('active');
+
+      const tabId = this.dataset.tab;
+      const targetContent = document.getElementById(`tab-${tabId}`);
+      if (targetContent) {
+        targetContent.classList.add('active');
+        // Reset slider position when switching tabs
+        const sliderWrapper = targetContent.querySelector('.slider-wrapper');
+        if (sliderWrapper) {
+          sliderWrapper.style.transform = 'translateX(0)';
+          const counter = targetContent.querySelector('.slider-counter');
+          if (counter) {
+            const total = sliderWrapper.children.length;
+            counter.textContent = `1 / ${total}`;
+          }
+        }
       }
-      element.textContent = current + suffix;
-    }, 30);
+    });
+  });
+
+  // ─── Slider Function ───
+  let sliderStates = {};
+
+  function moveSlider(tabId, direction) {
+    const tabContent = document.getElementById(`tab-${tabId}`);
+    if (!tabContent) return;
+
+    const wrapper = tabContent.querySelector('.slider-wrapper');
+    const counter = tabContent.querySelector('.slider-counter');
+    if (!wrapper || !counter) return;
+
+    const slides = wrapper.children;
+    const totalSlides = slides.length;
+
+    // Initialize state for this slider
+    if (!sliderStates[tabId]) {
+      sliderStates[tabId] = { currentIndex: 0 };
+    }
+
+    let currentIndex = sliderStates[tabId].currentIndex;
+    let newIndex = currentIndex + direction;
+
+    // Loop around
+    if (newIndex < 0) newIndex = totalSlides - 1;
+    if (newIndex >= totalSlides) newIndex = 0;
+
+    sliderStates[tabId].currentIndex = newIndex;
+
+    // Move the slider
+    wrapper.style.transform = `translateX(-${newIndex * 100}%)`;
+    counter.textContent = `${newIndex + 1} / ${totalSlides}`;
   }
 
-  const statsSection = document.querySelector('.stats-grid');
-  if (statsSection) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const statNumbers = document.querySelectorAll('.stat-item .number');
-          const targets = [150, 80, 98];
-          const suffixes = ['+', '+', '%'];
-          statNumbers.forEach((el, i) => {
-            el.textContent = '0';
-            animateCounter(el, targets[i], suffixes[i]);
-          });
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.3 });
-    observer.observe(statsSection);
-  }
+  // ─── Initialize Sliders ───
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    const wrapper = tab.querySelector('.slider-wrapper');
+    const counter = tab.querySelector('.slider-counter');
+    if (wrapper && counter) {
+      const total = wrapper.children.length;
+      const tabId = tab.id.replace('tab-', '');
+      sliderStates[tabId] = { currentIndex: 0 };
+      counter.textContent = `1 / ${total}`;
+    }
+  });
 </script>
 
 </body>
