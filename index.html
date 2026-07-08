@@ -154,18 +154,9 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
     }
-    .theme-toggle .icon.sun {
-      left: 6px;
-      color: #f7c948;
-    }
-    .theme-toggle .icon.moon {
-      right: 6px;
-      color: #a8c8f0;
-    }
-    /* Light mode toggle state */
-    [data-theme="light"] .theme-toggle .slider {
-      transform: translateX(24px);
-    }
+    .theme-toggle .icon.sun { left: 6px; color: #f7c948; }
+    .theme-toggle .icon.moon { right: 6px; color: #a8c8f0; }
+    [data-theme="light"] .theme-toggle .slider { transform: translateX(24px); }
 
     /* ── Header ── */
     header {
@@ -791,28 +782,6 @@
     }
     .social-links a .icon { font-size: 1.2rem; }
 
-    /* ── PDF Download ── */
-    .pdf-download {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(74, 158, 255, 0.08);
-      color: var(--text-secondary);
-      padding: 12px 28px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: background 0.25s, color 0.25s, transform 0.25s;
-      border: 1px solid var(--border-light);
-      margin-top: 10px;
-    }
-    .pdf-download:hover {
-      background: rgba(74, 158, 255, 0.15);
-      color: #4a9eff;
-      transform: translateY(-2px);
-    }
-
     /* ── CTA ── */
     .cta-box {
       background: var(--bg-secondary);
@@ -1002,7 +971,6 @@
         </ul>
       </div>
       <div>
-        <!-- Redesigned Precision Box -->
         <div class="precision-grid">
           <div class="precision-card">
             <span class="precision-icon">✏️</span>
@@ -1080,70 +1048,43 @@
   </div>
 </section>
 
-<!-- ═══════════ PORTFOLIO WITH SLIDING GALLERY ═══════════ -->
+<!-- ═══════════ PORTFOLIO ═══════════ -->
 <section id="portfolio" style="background: var(--section-even);">
   <div class="container">
     <h2>Our Portfolio</h2>
     <p style="margin-bottom:20px; color:var(--text-muted);">Click any image to enlarge. Use the arrows to browse through projects.</p>
 
-    <!-- Tab Buttons -->
     <div class="tab-buttons">
       <button class="tab-btn active" data-tab="architectural">🏛️ Architectural</button>
       <button class="tab-btn" data-tab="3d">🎯 3D Visualizations</button>
       <button class="tab-btn" data-tab="siteworks">🔍 Site Works</button>
     </div>
 
-    <!-- ═══ TAB 1: ARCHITECTURAL ═══ -->
     <div class="tab-content active" id="tab-architectural">
       <div class="slider-container">
-        <div class="slider-wrapper" id="slider-architectural">
-          <div class="slide"><img src="arch-1.png" alt="Architectural Design 1" /></div>
-          <div class="slide"><img src="arch-2.png" alt="Architectural Design 2" /></div>
-          <div class="slide"><img src="arch-3.png" alt="Architectural Design 3" /></div>
-          <div class="slide"><img src="arch-4.png" alt="Architectural Design 4" /></div>
-          <div class="slide"><img src="arch-5.png" alt="Architectural Design 5" /></div>
-          <div class="slide"><img src="arch-6.png" alt="Architectural Design 6" /></div>
-        </div>
+        <div class="slider-wrapper" id="slider-architectural"></div>
         <button class="slider-btn prev" onclick="moveSlider('architectural', -1)">❮</button>
         <button class="slider-btn next" onclick="moveSlider('architectural', 1)">❯</button>
-        <div class="slider-counter" id="counter-architectural">1 / 6</div>
+        <div class="slider-counter" id="counter-architectural">0 / 0</div>
       </div>
     </div>
 
-    <!-- ═══ TAB 2: 3D VISUALIZATIONS ═══ -->
     <div class="tab-content" id="tab-3d">
       <div class="slider-container">
-        <div class="slider-wrapper" id="slider-3d">
-          <div class="slide"><img src="3d-1.png" alt="3D Model 1" /></div>
-          <div class="slide"><img src="3d-2.png" alt="3D Model 2" /></div>
-          <div class="slide"><img src="3d-3.png" alt="3D Model 3" /></div>
-        </div>
+        <div class="slider-wrapper" id="slider-3d"></div>
         <button class="slider-btn prev" onclick="moveSlider('3d', -1)">❮</button>
         <button class="slider-btn next" onclick="moveSlider('3d', 1)">❯</button>
-        <div class="slider-counter" id="counter-3d">1 / 3</div>
+        <div class="slider-counter" id="counter-3d">0 / 0</div>
       </div>
     </div>
 
-    <!-- ═══ TAB 3: SITE WORKS ═══ -->
     <div class="tab-content" id="tab-siteworks">
       <div class="slider-container">
-        <div class="slider-wrapper" id="slider-siteworks">
-          <div class="slide"><img src="site-1.png" alt="Site Work 1" /></div>
-          <div class="slide"><img src="site-2.png" alt="Site Work 2" /></div>
-          <div class="slide"><img src="site-3.png" alt="Site Work 3" /></div>
-          <div class="slide"><img src="site-4.png" alt="Site Work 4" /></div>
-        </div>
+        <div class="slider-wrapper" id="slider-siteworks"></div>
         <button class="slider-btn prev" onclick="moveSlider('siteworks', -1)">❮</button>
         <button class="slider-btn next" onclick="moveSlider('siteworks', 1)">❯</button>
-        <div class="slider-counter" id="counter-siteworks">1 / 4</div>
+        <div class="slider-counter" id="counter-siteworks">0 / 0</div>
       </div>
-    </div>
-
-    <!-- PDF Download -->
-    <div style="text-align: center; margin-top: 30px;">
-      <a href="#" class="pdf-download" onclick="alert('📄 Upload your portfolio PDF to this repo and update the href!'); return false;">
-        📄 Download Full Portfolio PDF
-      </a>
     </div>
   </div>
 </section>
@@ -1181,38 +1122,23 @@
     <h2>Frequently Asked Questions</h2>
     <div class="faq-grid">
       <div class="faq-item">
-        <div class="question">
-          What types of projects do you handle?
-          <span class="icon">▾</span>
-        </div>
+        <div class="question">What types of projects do you handle? <span class="icon">▾</span></div>
         <div class="answer">We handle residential, commercial, and industrial projects including new builds, renovations, extensions, and as-built documentation.</div>
       </div>
       <div class="faq-item">
-        <div class="question">
-          Do you provide permit-ready drawings?
-          <span class="icon">▾</span>
-        </div>
+        <div class="question">Do you provide permit-ready drawings? <span class="icon">▾</span></div>
         <div class="answer">Yes! All our drawings are prepared to meet local building codes and permit requirements, making the approval process smooth.</div>
       </div>
       <div class="faq-item">
-        <div class="question">
-          How long does a typical project take?
-          <span class="icon">▾</span>
-        </div>
+        <div class="question">How long does a typical project take? <span class="icon">▾</span></div>
         <div class="answer">Timelines vary by project complexity. We provide clear timelines during our initial consultation and keep you updated throughout.</div>
       </div>
       <div class="faq-item">
-        <div class="question">
-          Do you offer 3D visualizations?
-          <span class="icon">▾</span>
-        </div>
+        <div class="question">Do you offer 3D visualizations? <span class="icon">▾</span></div>
         <div class="answer">Absolutely! We provide 3D models and renderings to help you visualize your project before construction begins.</div>
       </div>
       <div class="faq-item">
-        <div class="question">
-          How do I get started?
-          <span class="icon">▾</span>
-        </div>
+        <div class="question">How do I get started? <span class="icon">▾</span></div>
         <div class="answer">Simply reach out via our contact form, WhatsApp, or email. We'll schedule a consultation to discuss your project needs and timeline.</div>
       </div>
     </div>
@@ -1224,31 +1150,12 @@
   <div class="container">
     <h2>Get In Touch</h2>
     <div class="contact-grid">
-      <!-- Left: Contact Info -->
       <div class="contact-info">
         <h3>Let's bring your vision to life</h3>
         <p>Have a project in mind? Send us a message and we will get back to you very soon.</p>
-        <div class="detail">
-          <span style="font-size:1.5rem;">📧</span>
-          <div>
-            <strong>Email</strong><br />
-            <a href="mailto:nkonjelachawa@gmail.com">nkonjelachawa@gmail.com</a>
-          </div>
-        </div>
-        <div class="detail">
-          <span style="font-size:1.5rem;">📞</span>
-          <div>
-            <strong>Phone</strong><br />
-            <a href="tel:+260776428124">0776 428 124</a>
-          </div>
-        </div>
-        <div class="detail">
-          <span style="font-size:1.5rem;">📍</span>
-          <div>
-            <strong>Location</strong><br />
-            Lusaka, Zambia
-          </div>
-        </div>
+        <div class="detail"><span style="font-size:1.5rem;">📧</span><div><strong>Email</strong><br /><a href="mailto:nkonjelachawa@gmail.com">nkonjelachawa@gmail.com</a></div></div>
+        <div class="detail"><span style="font-size:1.5rem;">📞</span><div><strong>Phone</strong><br /><a href="tel:+260776428124">0776 428 124</a></div></div>
+        <div class="detail"><span style="font-size:1.5rem;">📍</span><div><strong>Location</strong><br />Lusaka, Zambia</div></div>
         <div style="margin-top:20px;">
           <p style="color:var(--text-muted); margin-bottom:12px;">Connect with us:</p>
           <div class="social-links">
@@ -1259,8 +1166,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Right: Contact Form -->
       <div>
         <form id="contactForm" action="https://formspree.io/f/xdarvkky" method="POST">
           <div class="form-group">
@@ -1296,19 +1201,16 @@
           <div id="formSuccess" class="form-success">✅ Your message has been sent! We will get back to you very soon.</div>
           <div id="formError" class="form-error">❌ Something went wrong. Please try again or email us directly.</div>
         </form>
-
         <div class="whatsapp-alternative">
           <p>📱 Or send us a message on WhatsApp</p>
-          <a href="https://wa.me/260776428124" target="_blank" class="whatsapp-link">
-            <span class="icon">💬</span> WhatsApp
-          </a>
+          <a href="https://wa.me/260776428124" target="_blank" class="whatsapp-link"><span class="icon">💬</span> WhatsApp</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ CTA SECTION ═══════════ -->
+<!-- ═══════════ CTA ═══════════ -->
 <section style="border-bottom: none; padding-top: 0;">
   <div class="container">
     <div class="cta-box">
@@ -1334,7 +1236,7 @@
   </div>
 </footer>
 
-<!-- ═══════════ BACK TO TOP BUTTON ═══════════ -->
+<!-- ═══════════ BACK TO TOP ═══════════ -->
 <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
 <!-- ═══════════ LIGHTBOX ═══════════ -->
@@ -1345,11 +1247,10 @@
 
 <!-- ═══════════ JAVASCRIPT ═══════════ -->
 <script>
-  // ─── Dark/Light Mode Toggle ───
+  // ─── Dark/Light Mode ───
   const themeToggle = document.getElementById('themeToggle');
   const currentTheme = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', currentTheme);
-
   themeToggle.addEventListener('click', () => {
     const current = document.documentElement.getAttribute('data-theme');
     const newTheme = current === 'dark' ? 'light' : 'dark';
@@ -1361,7 +1262,6 @@
   const text = "Architectural & Structural Designs — Precision. Power. Perfection.";
   const typingElement = document.getElementById('typingText');
   let index = 0;
-
   function typeText() {
     if (index < text.length) {
       typingElement.textContent = text.substring(0, index + 1);
@@ -1375,20 +1275,17 @@
   const form = document.getElementById('contactForm');
   const successMsg = document.getElementById('formSuccess');
   const errorMsg = document.getElementById('formError');
-
   if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       successMsg.style.display = 'none';
       errorMsg.style.display = 'none';
-
       try {
         const response = await fetch(form.action, {
           method: 'POST',
           body: new FormData(form),
           headers: { 'Accept': 'application/json' }
         });
-
         if (response.ok) {
           successMsg.style.display = 'block';
           form.reset();
@@ -1401,9 +1298,8 @@
     });
   }
 
-  // ─── Back to Top Button ───
+  // ─── Back to Top ───
   const backToTopBtn = document.getElementById('backToTop');
-
   window.addEventListener('scroll', () => {
     if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
       backToTopBtn.classList.add('visible');
@@ -1411,7 +1307,6 @@
       backToTopBtn.classList.remove('visible');
     }
   });
-
   backToTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
@@ -1420,33 +1315,25 @@
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
-
   function openLightbox(src) {
     lightboxImg.src = src;
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
-
-  document.querySelectorAll('.slide img').forEach(img => {
-    img.addEventListener('click', function(e) {
+  document.addEventListener('click', function(e) {
+    const img = e.target.closest('.slide img');
+    if (img) {
       e.stopPropagation();
-      openLightbox(this.src);
-    });
+      openLightbox(img.src);
+    }
   });
-
   function closeLightbox() {
     lightbox.classList.remove('active');
     document.body.style.overflow = '';
   }
-
   lightboxClose.addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) closeLightbox();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeLightbox();
-  });
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 
   // ─── FAQ Toggle ───
   document.querySelectorAll('.faq-item').forEach(item => {
@@ -1458,14 +1345,11 @@
   // ─── Portfolio Tabs ───
   const tabBtns = document.querySelectorAll('.tab-btn');
   const tabContents = document.querySelectorAll('.tab-content');
-
   tabBtns.forEach(btn => {
     btn.addEventListener('click', function() {
       tabBtns.forEach(b => b.classList.remove('active'));
       tabContents.forEach(c => c.classList.remove('active'));
-
       this.classList.add('active');
-
       const tabId = this.dataset.tab;
       const targetContent = document.getElementById(`tab-${tabId}`);
       if (targetContent) {
@@ -1483,6 +1367,70 @@
     });
   });
 
+  // ─── DYNAMIC SLIDER LOADER ───
+  const categories = [
+    { id: 'architectural', prefix: 'arch', maxImages: 20 },
+    { id: '3d', prefix: '3d', maxImages: 20 },
+    { id: 'siteworks', prefix: 'site', maxImages: 20 }
+  ];
+
+  // Function to load images for a category
+  function loadCategoryImages(category) {
+    const wrapper = document.getElementById(`slider-${category.id}`);
+    const counter = document.getElementById(`counter-${category.id}`);
+    if (!wrapper) return;
+
+    let images = [];
+
+    // Try to load images (check for existence by attempting to load them)
+    for (let i = 1; i <= category.maxImages; i++) {
+      const imgName = `${category.prefix}-${i}.png`;
+      const img = new Image();
+      img.src = imgName;
+      // We'll add the image if it loads successfully
+      // Using a callback to handle the async nature of image loading
+      img.onload = function() {
+        // Check if this image is already in the DOM
+        const existing = wrapper.querySelector(`img[src="${imgName}"]`);
+        if (!existing) {
+          const slide = document.createElement('div');
+          slide.className = 'slide';
+          const imgElement = document.createElement('img');
+          imgElement.src = imgName;
+          imgElement.alt = `${category.prefix.charAt(0).toUpperCase() + category.prefix.slice(1)} Design ${i}`;
+          slide.appendChild(imgElement);
+          wrapper.appendChild(slide);
+          // Update counter
+          if (counter) {
+            const total = wrapper.children.length;
+            counter.textContent = `1 / ${total}`;
+          }
+        }
+      };
+      // If image fails to load, it just won't be added
+    }
+
+    // After a short delay, check if any images were loaded, if none, show a placeholder
+    setTimeout(() => {
+      if (wrapper.children.length === 0) {
+        const slide = document.createElement('div');
+        slide.className = 'slide';
+        slide.innerHTML = `<div style="color: var(--text-muted); font-size: 1.2rem; text-align: center; padding: 40px;">
+          <p style="font-size: 2rem; margin-bottom: 10px;">🖼️</p>
+          <p>No images uploaded yet</p>
+          <p style="font-size: 0.8rem; opacity: 0.6;">Upload images named ${category.prefix}-1.png, ${category.prefix}-2.png, ...</p>
+        </div>`;
+        wrapper.appendChild(slide);
+        if (counter) {
+          counter.textContent = `0 / 0`;
+        }
+      }
+    }, 500);
+  }
+
+  // Load all categories
+  categories.forEach(cat => loadCategoryImages(cat));
+
   // ─── Slider Function ───
   let sliderStates = {};
 
@@ -1497,6 +1445,7 @@
     const slides = wrapper.children;
     const totalSlides = slides.length;
 
+    // Initialize state for this slider
     if (!sliderStates[tabId]) {
       sliderStates[tabId] = { currentIndex: 0 };
     }
@@ -1509,10 +1458,12 @@
 
     sliderStates[tabId].currentIndex = newIndex;
 
+    // Move the slider
     wrapper.style.transform = `translateX(-${newIndex * 100}%)`;
     counter.textContent = `${newIndex + 1} / ${totalSlides}`;
   }
 
+  // Initialize slider states
   document.querySelectorAll('.tab-content').forEach(tab => {
     const wrapper = tab.querySelector('.slider-wrapper');
     const counter = tab.querySelector('.slider-counter');
@@ -1520,7 +1471,9 @@
       const total = wrapper.children.length;
       const tabId = tab.id.replace('tab-', '');
       sliderStates[tabId] = { currentIndex: 0 };
-      counter.textContent = `1 / ${total}`;
+      if (total > 0) {
+        counter.textContent = `1 / ${total}`;
+      }
     }
   });
 </script>
