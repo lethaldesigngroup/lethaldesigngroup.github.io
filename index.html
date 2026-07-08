@@ -1431,7 +1431,7 @@
     });
   });
 
-  // ─── DYNAMIC SLIDER LOADER ───
+  // ─── DYNAMIC SLIDER LOADER (FIXED ORDER) ───
   const categories = [
     { id: 'architectural', prefix: 'arch', maxImages: 50 },
     { id: '3d', prefix: '3d', maxImages: 50 },
@@ -1448,12 +1448,16 @@
       sliderStates[tabId] = { currentIndex: 0 };
       counter.textContent = `1 / ${total}`;
     } else {
+      let prefix = 'arch';
+      if (tabId === '3d') prefix = '3d';
+      else if (tabId === 'siteworks') prefix = 'site';
+
       const slide = document.createElement('div');
       slide.className = 'slide';
       slide.innerHTML = `<div style="color: var(--text-muted); font-size: 1.2rem; text-align: center; padding: 40px;">
         <p style="font-size: 2rem; margin-bottom: 10px;">🖼️</p>
         <p>No images uploaded yet</p>
-        <p style="font-size: 0.8rem; opacity: 0.6;">Upload images named ${tabId === 'architectural' ? 'arch' : tabId === '3d' ? '3d' : 'site'}-1.png, ...</p>
+        <p style="font-size: 0.8rem; opacity: 0.6;">Upload images named ${prefix}-1.png, ${prefix}-2.png, ...</p>
       </div>`;
       wrapper.appendChild(slide);
       counter.textContent = `0 / 0`;
@@ -1467,29 +1471,36 @@
     if (!wrapper) return;
 
     wrapper.innerHTML = '';
+    const loadedImages = [];
 
     for (let i = 1; i <= category.maxImages; i++) {
       const imgName = `${category.prefix}-${i}.png`;
       const img = new Image();
       img.src = imgName;
       img.onload = function() {
-        const existing = wrapper.querySelector(`img[src="${imgName}"]`);
-        if (!existing) {
+        // Store the image in the correct order
+        loadedImages.push({ index: i, src: imgName });
+        // Sort by index to maintain order
+        loadedImages.sort((a, b) => a.index - b.index);
+        // Rebuild the slider in the correct order
+        wrapper.innerHTML = '';
+        loadedImages.forEach(item => {
           const slide = document.createElement('div');
           slide.className = 'slide';
           const imgElement = document.createElement('img');
-          imgElement.src = imgName;
-          imgElement.alt = `${category.prefix.charAt(0).toUpperCase() + category.prefix.slice(1)} Design ${i}`;
+          imgElement.src = item.src;
+          imgElement.alt = `${category.prefix.charAt(0).toUpperCase() + category.prefix.slice(1)} Design ${item.index}`;
           slide.appendChild(imgElement);
           wrapper.appendChild(slide);
-          updateSliderState(category.id, wrapper, counter);
-        }
+        });
+        updateSliderState(category.id, wrapper, counter);
       };
+      // If image fails to load, skip it silently
     }
 
     setTimeout(() => {
       updateSliderState(category.id, wrapper, counter);
-    }, 1500);
+    }, 2000);
   }
 
   categories.forEach(cat => loadCategoryImages(cat));
