@@ -26,7 +26,7 @@
       --input-bg: rgba(6, 13, 26, 0.6);
       --section-even: rgba(74, 158, 255, 0.02);
       --slider-bg: rgba(6, 13, 26, 0.4);
-      --hero-overlay: rgba(6, 13, 26, 0.45);
+      --hero-overlay: rgba(6, 13, 26, 0.5);
     }
 
     /* ── Light Mode Variables ── */
@@ -174,29 +174,34 @@
       border-bottom: 4px solid #4a9eff;
     }
 
-    /* Feature 1: Animated Gradient Background */
-    .hero-gradient {
+    /* Background Image */
+    .hero-bg {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: 0;
-      background: linear-gradient(135deg, #0b1326, #1a2a4a, #0d1f3c, #162044);
-      background-size: 400% 400%;
-      animation: gradientShift 20s ease-in-out infinite alternate;
-      transition: background 0.3s ease;
+      background: url('arch-6.png') center center / cover no-repeat;
+      transition: transform 0.1s ease-out;
     }
-    [data-theme="light"] .hero-gradient {
-      background: linear-gradient(135deg, #e8edf5, #d0d8e8, #c0cde0, #e0e6f0);
-    }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    [data-theme="light"] .hero-bg {
+      filter: brightness(0.95) saturate(0.9);
     }
 
-    /* Feature 2: Architectural Grid Overlay */
+    /* Overlay */
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--hero-overlay);
+      z-index: 1;
+      transition: background 0.3s ease;
+    }
+
+    /* Subtle Grid Overlay */
     .hero-grid {
       position: absolute;
       top: 0;
@@ -216,29 +221,6 @@
         linear-gradient(90deg, rgba(74, 158, 255, 0.06) 1px, transparent 1px);
     }
 
-    /* Feature 3: Floating Particles */
-    #particles-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* Overlay */
-    .hero-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--hero-overlay);
-      z-index: 1;
-      transition: background 0.3s ease;
-    }
-
     /* Hero Content */
     .hero-content {
       position: relative;
@@ -255,7 +237,7 @@
       font-weight: 900;
       letter-spacing: 4px;
       text-transform: uppercase;
-      text-shadow: 0 4px 40px rgba(0,0,0,0.4);
+      text-shadow: 0 4px 40px rgba(0,0,0,0.5);
       margin-bottom: 8px;
     }
     .hero-content h1 span { color: #4a9eff; }
@@ -265,7 +247,7 @@
       font-weight: 300;
       letter-spacing: 2px;
       color: var(--text-muted);
-      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+      text-shadow: 0 2px 20px rgba(0,0,0,0.4);
     }
     .hero-content .typing-text {
       display: inline-block;
@@ -281,7 +263,7 @@
       justify-content: center;
       gap: 20px 40px;
       font-size: 0.95rem;
-      background: rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.25);
       backdrop-filter: blur(8px);
       padding: 14px 30px;
       border-radius: 12px;
@@ -1001,16 +983,13 @@
   </div>
 </nav>
 
-<!-- ═══════════ HERO SECTION (With Decorations) ═══════════ -->
+<!-- ═══════════ HERO SECTION ─═══════════ -->
 <section class="hero" id="home">
-  <!-- Feature 1: Animated Gradient -->
-  <div class="hero-gradient"></div>
+  <!-- Background Image -->
+  <div class="hero-bg" id="heroBg"></div>
 
-  <!-- Feature 2: Architectural Grid Overlay -->
+  <!-- Subtle Grid Overlay -->
   <div class="hero-grid"></div>
-
-  <!-- Feature 3: Floating Particles -->
-  <canvas id="particles-canvas"></canvas>
 
   <!-- Overlay -->
   <div class="hero-overlay"></div>
@@ -1347,6 +1326,15 @@
   }
   typeText();
 
+  // ─── Parallax Effect on Hero Background ───
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (heroBg) {
+      heroBg.style.transform = `translateY(${scrollY * 0.4}px)`;
+    }
+  });
+
   // ─── Contact Form ───
   const form = document.getElementById('contactForm');
   const successMsg = document.getElementById('formSuccess');
@@ -1549,86 +1537,6 @@
         counter.textContent = `0 / 0`;
       }
     }
-  });
-
-  // ─── FLOATING PARTICLES (Feature 3) ───
-  const canvas = document.getElementById('particles-canvas');
-  const ctx = canvas.getContext('2d');
-  let particles = [];
-  let animationId;
-
-  function resizeCanvas() {
-    const rect = canvas.parentElement.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
-  }
-
-  class Particle {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 3 + 1;
-      this.speedX = (Math.random() - 0.5) * 0.3;
-      this.speedY = (Math.random() - 0.5) * 0.3;
-      this.opacity = Math.random() * 0.5 + 0.1;
-    }
-
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-
-      if (this.x > canvas.width) this.x = 0;
-      if (this.x < 0) this.x = canvas.width;
-      if (this.y > canvas.height) this.y = 0;
-      if (this.y < 0) this.y = canvas.height;
-    }
-
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(74, 158, 255, ${this.opacity})`;
-      ctx.fill();
-    }
-  }
-
-  function initParticles() {
-    const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 12000));
-    particles = [];
-    for (let i = 0; i < count; i++) {
-      particles.push(new Particle());
-    }
-  }
-
-  function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-      p.update();
-      p.draw();
-    });
-    animationId = requestAnimationFrame(animateParticles);
-  }
-
-  function startParticles() {
-    resizeCanvas();
-    initParticles();
-    if (animationId) cancelAnimationFrame(animationId);
-    animateParticles();
-  }
-
-  window.addEventListener('resize', () => {
-    resizeCanvas();
-    initParticles();
-  });
-
-  // Start particles when the page loads
-  window.addEventListener('load', startParticles);
-
-  // ─── Reinitialize particles when theme changes ───
-  themeToggle.addEventListener('click', () => {
-    setTimeout(() => {
-      resizeCanvas();
-      initParticles();
-    }, 100);
   });
 </script>
 
